@@ -40,10 +40,9 @@ describe Flextures do
         before do
           FileUtils.cp "spec/fixtures_bkup/users_dump.yml", "spec/fixtures/users.yml"
         end
-
+=begin
         describe do
           fixtures :users
-          
           it "はyamlでデータを吐き出す" do
             @base = IO.read Rails.root.to_path<< "/spec/fixtures_bkup/users_dump.yml"
             p User.all
@@ -52,7 +51,7 @@ describe Flextures do
             @result.should == @base
           end
         end
-=begin
+
         it "改行混じり" do
         end
 
