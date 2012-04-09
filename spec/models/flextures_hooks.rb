@@ -3,6 +3,7 @@
 require 'spec_helper'
 
 describe Flextures do
+=begin
   describe "RSpec::Hooks" do
     context "::flextures " do 
       flextures :users
@@ -76,5 +77,6 @@ describe Flextures do
       end
     end
   end
+=end
 end
 

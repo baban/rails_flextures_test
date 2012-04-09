@@ -90,49 +90,5 @@ describe Flextures do
       end
     end
   end
-
-  describe "Factory::" do
-    describe "get " do
-      it "(table_name)は処理すべき関数を返す" do
- #       Flextures::Factory.get(:users).should be_instance_of Proc
-      end
-
-      it "(not_exist_table) は、関数を返さない" do
-#        Flextures::Factory.get(:foo).should == nil
-      end
-    end
-
-    describe " " do
-      it "[table_name] は処理すべき関数を返す" do
-#        Flextures::Factory[:users].should be_instance_of Proc
-      end
-
-      it "[not_exist_table] は、関数を返さない" do
-#        Flextures::Factory.get(:foo).should == nil
-      end
-    end
-
-    context "でデータを作成すると" do
-      it "元のデータに変更をかけて、ハッシュを返す" do
-#        fn = Flextures::Factory[:test]
-#        h = { foo:10 }
-#        h = Flextures::OpenStruct.new h
-#        fn.call h
-#        h = h.to_hash
-#        h[:foo].should == 15
-      end
-    end
-
-    describe "" do
-      it "" do
-=begin
-        klass = Class.new(ActiveRecord::Base){ |o| o.table_name= "guilds"}
-        klass.delete_all
-        Flextures::Loader::csv table: 'guilds'
-        klass.first.rank.should==2
-=end
-      end
-    end
-  end
 end
 
