@@ -50,11 +50,6 @@ describe Flextures do
 # オプションでデータを厳密に読んで矛盾する列でえらーをraiseする
 #
   context "ARGS::parse" do
-=begin
-    before do
-      @item = create(:item)
-    end
-
     it " 指定がないときは全テーブル名前取得 " do
       format = Flextures::ARGS.parse
       format.size.should == ActiveRecord::Base.connection.tables.size
@@ -152,7 +147,6 @@ describe Flextures do
         table_model.table_name.should == table_name
       end
     end
-=end
   end
 
   describe "Loader::" do
