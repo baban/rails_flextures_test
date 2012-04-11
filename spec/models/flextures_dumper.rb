@@ -26,6 +26,22 @@ describe Flextures do
           @base.should == @result
         end
       end
+
+      describe :null do
+        before do
+          User.create( name:"hoge", sex: 0, level: 1, exp: 0, guild_id: 0, hp: 10, mp: 0 )
+        end
+        
+        it "nullをdumpする" do
+          Flextures::Dumper::csv table: "users"
+          path = Rails.root.to_path<< "/spec/fixtures/users.csv"
+          CSV.open( path ) do |csv|
+            keys = csv.shift
+            values = csv.first
+            values[3].should == nil
+          end
+        end
+      end
     end
 
     # dumpしたyamlを比較する
@@ -62,6 +78,14 @@ describe Flextures do
         end
 
         context "null" do
+          before do
+            User.create( name:"hoge", sex: 0, level: 1, exp: 0, guild_id: 0, hp: 10, mp: 0 )
+          end
+          it "nilをnullとしてdumpする" do
+            Flextures::Dumper::yml table: "users"
+            yaml = YAML.load_file( Rails.root.to_path+"/spec/fixtures/users.yml" )
+            yaml["users_0"]["profile_comment"].should == nil
+          end
         end
 
         context "先頭space" do
