@@ -1,8 +1,12 @@
 users_0:
   id: 1
-  name: iii
+  name: |-
+    iii
+    jjj
   sex: 1
-  profile_comment: aab
+  profile_comment: |-
+    aaa
+    bbb
   level: 1
   exp: 10
   guild_id: 1
