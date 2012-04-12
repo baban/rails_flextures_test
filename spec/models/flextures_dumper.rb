@@ -42,6 +42,22 @@ describe Flextures do
           end
         end
       end
+
+      describe "空文字" do
+        before do
+          User.create( name:"hoge", sex: 0, profile_comment:"", level: 1, exp: 0, guild_id: 0, hp: 10, mp: 0 )
+        end
+        
+        it "nullをdumpする" do
+          Flextures::Dumper::csv table: "users"
+          path = Rails.root.to_path<< "/spec/fixtures/users.csv"
+          CSV.open( path ) do |csv|
+            keys = csv.shift
+            values = csv.first
+            values[3].should == ""
+          end
+        end
+      end
     end
 
     # dumpしたyamlを比較する
