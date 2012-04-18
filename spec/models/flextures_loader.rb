@@ -4,26 +4,163 @@ require 'spec_helper'
 
 describe Flextures do
   describe "Loader::" do
-=begin
-    describe :find_file do
-      context do
-        before do
-          file_name = "users"
-          dir_name = Flextures::LOAD_DIR
-          format = { table: "users" }
-          @method, @inpfile = Flextures::Loader::find_file file_name, dir_name, format
+    describe "TRANSLATER" do
+      context :binary do
+      end
+      context :boolean do
+        it "nil" do
+          Flextures::Loader::TRANSLATER[:boolean].call(nil).should == nil
         end
-
-        it "は見つけたファイルの拡張子を返す" do
-          @method.should == :csv
+        it "true" do
+          Flextures::Loader::TRANSLATER[:boolean].call(true).should == true
         end
-
-        it "は見つけたファイルの名前を返す" do
-          @inpfile.should == "#{Flextures::LOAD_DIR}users.csv"
+        it "false" do
+          Flextures::Loader::TRANSLATER[:boolean].call(false).should == false
+        end
+        it "0" do
+          Flextures::Loader::TRANSLATER[:boolean].call(0).should == false
+        end
+        it "1" do
+          Flextures::Loader::TRANSLATER[:boolean].call(1).should == true
+        end
+        it "-1" do
+          Flextures::Loader::TRANSLATER[:boolean].call(-1).should == true
+        end
+        it "空白文字" do
+          Flextures::Loader::TRANSLATER[:boolean].call("").should == false
+        end
+        it "文字" do
+          Flextures::Loader::TRANSLATER[:boolean].call("Hello").should == true
+        end
+      end
+      context :date do
+        it "正常値の文字列" do
+          Flextures::Loader::TRANSLATER[:date].call("2011/11/21").strftime("%Y/%m/%d").should == "2011/11/21"
+        end
+        it "Timeオブジェクト" do
+          now = Time.now
+          Flextures::Loader::TRANSLATER[:date].call(now).strftime("%Y/%m/%d").should == now.strftime("%Y/%m/%d")
+        end
+        it "DateTimeオブジェクト" do
+          now = DateTime.now
+          Flextures::Loader::TRANSLATER[:date].call(now).strftime("%Y/%m/%d").should == now.strftime("%Y/%m/%d")
+        end
+        it "日付っぽい数字" do
+          now = "20111121"
+          Flextures::Loader::TRANSLATER[:date].call(now).should be_instance_of Date
+        end
+        it "nil" do
+          Flextures::Loader::TRANSLATER[:date].call(nil).should == nil
+        end
+        it "空文字" do
+          Flextures::Loader::TRANSLATER[:date].call("").should == nil
+        end
+      end
+      context :datetime do
+        it "正常値の文字列" do
+          Flextures::Loader::TRANSLATER[:date].call("2011/11/21").strftime("%Y/%m/%d").should == "2011/11/21"
+        end
+        it "Timeオブジェクト" do
+          now = Time.now
+          Flextures::Loader::TRANSLATER[:date].call(now).strftime("%Y/%m/%d").should == now.strftime("%Y/%m/%d")
+        end
+        it "DateTimeオブジェクト" do
+          now = DateTime.now
+          Flextures::Loader::TRANSLATER[:date].call(now).strftime("%Y/%m/%d").should == now.strftime("%Y/%m/%d")
+        end
+        it "日付っぽい数字" do
+          now = "20111121"
+          Flextures::Loader::TRANSLATER[:date].call(now).should be_instance_of Date
+        end
+        it "nil" do
+          Flextures::Loader::TRANSLATER[:date].call(nil).should == nil
+        end
+        it "空文字" do
+          Flextures::Loader::TRANSLATER[:date].call("").should == nil
+        end
+      end
+      context :decimal do
+      end
+      context :float do
+      end
+      context :integer do
+      end
+      context :string do
+        it "null" do
+          Flextures::Loader::TRANSLATER[:string].call(nil).should === nil
+        end
+        it "空文字" do
+          Flextures::Loader::TRANSLATER[:string].call("").should === ""
+        end
+        it "タブ混じり" do
+          s="\taaaaa"
+          Flextures::Loader::TRANSLATER[:string].call(s).should === s
+        end
+        it "改行混じり" do
+          s="aa\naaa"
+          Flextures::Loader::TRANSLATER[:string].call(s).should === s
+        end
+        it "スペース混じり" do
+          s="aa aaa"
+          Flextures::Loader::TRANSLATER[:string].call(s).should === s
+        end
+      end
+      context :text do
+        it "null" do
+          Flextures::Loader::TRANSLATER[:text].call(nil).should === nil
+        end
+        it "空文字" do
+          Flextures::Loader::TRANSLATER[:text].call("").should === ""
+        end
+      end
+      context :time do
+        it "正常値の文字列" do
+          Flextures::Loader::TRANSLATER[:time].call("2011/11/21").strftime("%Y/%m/%d").should == "2011/11/21"
+        end
+        it "Timeオブジェクト" do
+          now = Time.now
+          Flextures::Loader::TRANSLATER[:time].call(now).strftime("%Y/%m/%d").should == now.strftime("%Y/%m/%d")
+        end
+        it "DateTimeオブジェクト" do
+          now = DateTime.now
+          Flextures::Loader::TRANSLATER[:time].call(now).strftime("%Y/%m/%d").should == now.strftime("%Y/%m/%d")
+        end
+        it "日付っぽい数字" do
+          now = "20111121"
+          Flextures::Loader::TRANSLATER[:time].call(now).should be_instance_of DateTime
+        end
+        it "nil" do
+          Flextures::Loader::TRANSLATER[:time].call(nil).should == nil
+        end
+        it "空文字" do
+          Flextures::Loader::TRANSLATER[:time].call("").should == nil
+        end
+      end
+      context :timestamp do
+        it "正常値の文字列" do
+          Flextures::Loader::TRANSLATER[:timestamp].call("2011/11/21").strftime("%Y/%m/%d").should == "2011/11/21"
+        end
+        it "Timeオブジェクト" do
+          now = Time.now
+          Flextures::Loader::TRANSLATER[:timestamp].call(now).strftime("%Y/%m/%d").should == now.strftime("%Y/%m/%d")
+        end
+        it "DateTimeオブジェクト" do
+          now = DateTime.now
+          Flextures::Loader::TRANSLATER[:timestamp].call(now).strftime("%Y/%m/%d").should == now.strftime("%Y/%m/%d")
+        end
+        it "日付っぽい数字" do
+          now = "20111121"
+          Flextures::Loader::TRANSLATER[:timestamp].call(now).should be_instance_of DateTime
+        end
+        it "nil" do
+          Flextures::Loader::TRANSLATER[:timestamp].call(nil).should == nil
+        end
+        it "空文字" do
+          Flextures::Loader::TRANSLATER[:timestamp].call("").should == nil
         end
       end
     end
-=end
+
     describe :yml do
       before do
         `rm spec/fixtures/users.csv 2>/dev/null`

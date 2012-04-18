@@ -5,11 +5,12 @@ gem 'rails', '3.2.2'
 gem 'mysql2', '0.3.11'
 gem 'rspec'
 gem 'rspec-rails'
-gem 'flextures', '1.9.7'
+gem 'flextures', '1.9.8'
 gem 'faker'
 gem 'faker-japanese'
 gem "spork"
 gem "factory_girl_rails"
+gem "aspectr"
 
 group :assets do
 #  gem 'sass-rails',   '~> 3.2.3'

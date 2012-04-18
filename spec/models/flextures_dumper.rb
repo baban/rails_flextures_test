@@ -154,6 +154,168 @@ describe Flextures do
           end
         end
       end
+
+      describe "TRANSLATER" do
+        context :binary do
+        end
+        describe :boolean do
+          context :yml do
+            it "null" do
+              Flextures::Dumper::TRANSLATER[:boolean].call( nil, :yml ).should === "null"
+            end
+            it "0" do
+              Flextures::Dumper::TRANSLATER[:boolean].call( 0, :yml ).should === false
+            end
+            it "1" do
+              Flextures::Dumper::TRANSLATER[:boolean].call( 1, :yml ).should === true
+            end
+            it "空文字" do
+              Flextures::Dumper::TRANSLATER[:boolean].call( "", :yml ).should === false
+            end
+            it "文字列" do
+              Flextures::Dumper::TRANSLATER[:boolean].call( "Hello", :yml ).should === true
+            end
+          end
+          context :csv do
+          end
+        end
+        describe :date do
+          context :yml do
+            it "null" do
+              Flextures::Dumper::TRANSLATER[:date].call( nil, :yml ).should === "null"
+            end
+            it "空文字" do
+              Flextures::Dumper::TRANSLATER[:date].call( "", :yml ).should === "null"
+            end
+            it "false" do
+              Flextures::Dumper::TRANSLATER[:date].call( false, :yml ).should === "null"
+            end
+          end
+          context :csv do
+          end
+        end
+        describe :datetime do
+          context :yml do
+            it "null" do
+              Flextures::Dumper::TRANSLATER[:datetime].call( nil, :yml ).should === "null"
+            end
+            it "空文字" do
+              Flextures::Dumper::TRANSLATER[:datetime].call( "", :yml ).should === "null"
+            end
+            it "false" do
+              Flextures::Dumper::TRANSLATER[:datetime].call( false, :yml ).should === "null"
+            end
+          end
+          context :csv do
+          end
+        end
+        describe :decimal do
+          context :yml do
+            it "null" do
+              Flextures::Dumper::TRANSLATER[:decimal].call( nil, :yml ).should === "null"
+            end
+            it "0" do
+              Flextures::Dumper::TRANSLATER[:decimal].call( 0, :yml ).should === 0
+            end
+            it "false" do
+              Flextures::Dumper::TRANSLATER[:decimal].call( false, :yml ).should === 0
+            end
+          end
+          context :csv do
+          end
+        end
+        describe :float do
+          context :yml do
+            it "null" do
+              Flextures::Dumper::TRANSLATER[:float].call( nil, :yml ).should === "null"
+            end
+            it "0" do
+              Flextures::Dumper::TRANSLATER[:float].call( 0, :yml ).should === 0
+            end
+            it "false" do
+              Flextures::Dumper::TRANSLATER[:float].call( false, :yml ).should === 0
+            end
+          end
+          context :csv do
+          end
+        end
+        describe :integer do
+          context :yml do
+            it "null" do
+              Flextures::Dumper::TRANSLATER[:integer].call( nil, :yml ).should === "null"
+            end
+            it "0" do
+              Flextures::Dumper::TRANSLATER[:integer].call( 0, :yml ).should === 0
+            end
+            it "false" do
+              Flextures::Dumper::TRANSLATER[:integer].call( false, :yml ).should === 0
+            end
+          end
+          context :csv do
+          end
+        end
+        describe :string do
+          context :yml do
+            it "null" do
+              Flextures::Dumper::TRANSLATER[:string].call( nil, :yml ).should === "null"
+            end
+            it "空文字" do
+              Flextures::Dumper::TRANSLATER[:string].call( "", :yml ).should === ""
+            end
+            it "false" do
+              Flextures::Dumper::TRANSLATER[:string].call( false, :yml ).should === false
+            end
+          end
+          context :csv do
+          end
+        end
+        describe :text do
+          context :yml do
+            it "null" do
+              Flextures::Dumper::TRANSLATER[:string].call( nil, :yml ).should === "null"
+            end
+            it "空文字" do
+              Flextures::Dumper::TRANSLATER[:string].call( "", :yml ).should === ""
+            end
+            it "false" do
+              Flextures::Dumper::TRANSLATER[:string].call( false, :yml ).should === false
+            end
+          end
+          context :csv do
+          end
+        end
+        describe :time do
+          context :yml do
+            it "null" do
+              Flextures::Dumper::TRANSLATER[:time].call( nil, :yml ).should === "null"
+            end
+            it "空文字" do
+              Flextures::Dumper::TRANSLATER[:time].call( "", :yml ).should === "null"
+            end
+            it "false" do
+              Flextures::Dumper::TRANSLATER[:time].call( false, :yml ).should === "null"
+            end
+          end
+          context :csv do
+          end
+        end
+        describe :timestamp do
+          context :yml do
+            it "null" do
+              Flextures::Dumper::TRANSLATER[:time].call( nil, :yml ).should === "null"
+            end
+            it "空文字" do
+              Flextures::Dumper::TRANSLATER[:time].call( "", :yml ).should === "null"
+            end
+            it "false" do
+              Flextures::Dumper::TRANSLATER[:time].call( false, :yml ).should === "null"
+            end
+          end
+          context :csv do
+          end
+        end
+      end
+
     end
     after do
       `rm spec/fixtures/users.csv 2>/dev/null`

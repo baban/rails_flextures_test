@@ -43,7 +43,7 @@ describe Flextures do
     end
 
     context "::flextures " do
-      flextures :users => :"foo/users"
+      flextures :users => "foo/users"
       it "で指定したディレクトリのファイルをロードする" do
         klass = Class.new(ActiveRecord::Base){|o| o.table_name=:users }
         klass.count.should==3
@@ -69,6 +69,8 @@ describe Flextures do
           klass.count.should==4
           klass = Class.new(ActiveRecord::Base){|o| o.table_name=:items }
           klass.count.should==5
+          klass = Class.new(ActiveRecord::Base){|o| o.table_name=:users }
+          klass.count.should==0
         end
       end
 
