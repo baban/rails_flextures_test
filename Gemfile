@@ -5,7 +5,7 @@ gem 'rails', '3.2.2'
 gem 'mysql2', '0.3.11'
 gem 'rspec'
 gem 'rspec-rails'
-gem 'flextures', '1.9.8'
+gem 'flextures', '1.9.9'
 gem 'faker'
 gem 'faker-japanese'
 gem "spork"

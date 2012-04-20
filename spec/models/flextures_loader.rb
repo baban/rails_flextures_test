@@ -5,16 +5,19 @@ require 'spec_helper'
 describe Flextures do
   describe "Loader::" do
     describe "TRANSLATER" do
-      context :binary do
-      end
-      context :boolean do
+      describe :binary do
         it "nil" do
+          Flextures::Loader::TRANSLATER[:binary].call(nil).should == nil
+        end
+      end
+      describe :boolean do
+        it "nilはそのまま" do
           Flextures::Loader::TRANSLATER[:boolean].call(nil).should == nil
         end
-        it "true" do
+        it "trueもそのまま" do
           Flextures::Loader::TRANSLATER[:boolean].call(true).should == true
         end
-        it "false" do
+        it "falseもそのまま" do
           Flextures::Loader::TRANSLATER[:boolean].call(false).should == false
         end
         it "0" do
@@ -33,7 +36,7 @@ describe Flextures do
           Flextures::Loader::TRANSLATER[:boolean].call("Hello").should == true
         end
       end
-      context :date do
+      describe :date do
         it "正常値の文字列" do
           Flextures::Loader::TRANSLATER[:date].call("2011/11/21").strftime("%Y/%m/%d").should == "2011/11/21"
         end
@@ -56,7 +59,7 @@ describe Flextures do
           Flextures::Loader::TRANSLATER[:date].call("").should == nil
         end
       end
-      context :datetime do
+      describe :datetime do
         it "正常値の文字列" do
           Flextures::Loader::TRANSLATER[:date].call("2011/11/21").strftime("%Y/%m/%d").should == "2011/11/21"
         end
@@ -79,13 +82,22 @@ describe Flextures do
           Flextures::Loader::TRANSLATER[:date].call("").should == nil
         end
       end
-      context :decimal do
+      describe :decimal do
+        it "null" do
+          Flextures::Loader::TRANSLATER[:decimal].call(nil).should === nil
+        end
       end
-      context :float do
+      describe :float do
+        it "null" do
+          Flextures::Loader::TRANSLATER[:float].call(nil).should === nil
+        end
       end
-      context :integer do
+      describe :integer do
+        it "null" do
+          Flextures::Loader::TRANSLATER[:integer].call(nil).should === nil
+        end
       end
-      context :string do
+      describe :string do
         it "null" do
           Flextures::Loader::TRANSLATER[:string].call(nil).should === nil
         end
@@ -105,7 +117,7 @@ describe Flextures do
           Flextures::Loader::TRANSLATER[:string].call(s).should === s
         end
       end
-      context :text do
+      describe :text do
         it "null" do
           Flextures::Loader::TRANSLATER[:text].call(nil).should === nil
         end
@@ -113,7 +125,7 @@ describe Flextures do
           Flextures::Loader::TRANSLATER[:text].call("").should === ""
         end
       end
-      context :time do
+      describe :time do
         it "正常値の文字列" do
           Flextures::Loader::TRANSLATER[:time].call("2011/11/21").strftime("%Y/%m/%d").should == "2011/11/21"
         end
@@ -125,64 +137,159 @@ describe Flextures do
           now = DateTime.now
           Flextures::Loader::TRANSLATER[:time].call(now).strftime("%Y/%m/%d").should == now.strftime("%Y/%m/%d")
         end
-        it "日付っぽい数字" do
+        it "日付っぽい数字はDateTime型" do
           now = "20111121"
           Flextures::Loader::TRANSLATER[:time].call(now).should be_instance_of DateTime
         end
-        it "nil" do
+        it "nilはnilのまま" do
           Flextures::Loader::TRANSLATER[:time].call(nil).should == nil
         end
-        it "空文字" do
+        it "空文字はnil" do
           Flextures::Loader::TRANSLATER[:time].call("").should == nil
         end
       end
-      context :timestamp do
-        it "正常値の文字列" do
+      describe :timestamp do
+        it "正常値の文字列はDateTimeに変換" do
           Flextures::Loader::TRANSLATER[:timestamp].call("2011/11/21").strftime("%Y/%m/%d").should == "2011/11/21"
         end
         it "Timeオブジェクト" do
           now = Time.now
           Flextures::Loader::TRANSLATER[:timestamp].call(now).strftime("%Y/%m/%d").should == now.strftime("%Y/%m/%d")
         end
-        it "DateTimeオブジェクト" do
+        it "DateTimeオブジェクトはDateTime" do
           now = DateTime.now
           Flextures::Loader::TRANSLATER[:timestamp].call(now).strftime("%Y/%m/%d").should == now.strftime("%Y/%m/%d")
         end
-        it "日付っぽい数字" do
+        it "日付っぽい数字はDateTime" do
           now = "20111121"
           Flextures::Loader::TRANSLATER[:timestamp].call(now).should be_instance_of DateTime
         end
-        it "nil" do
+        it "nilからnil" do
           Flextures::Loader::TRANSLATER[:timestamp].call(nil).should == nil
         end
-        it "空文字" do
+        it "空文字はnil" do
           Flextures::Loader::TRANSLATER[:timestamp].call("").should == nil
         end
       end
     end
 
-    describe :yml do
+    describe "::file_exist " do
+      context "csvのみ" do
+        context "データをパースして必要な情報を返す" do
+          before do
+            @table_name, @file_name, @ext = Flextures::Loader::file_exist(table:'users', file:"onlycsv")
+          end
+
+          it "データは３つ" do
+            Flextures::Loader::file_exist(table:'users', file:"onlycsv").size.should==3
+          end
+
+          it "テーブル名" do
+            @table_name.should=="users"
+          end
+
+          it "ロードするファイル名" do
+            @file_name.should=="spec/fixtures/onlycsv"
+          end
+
+          it "ファイルの拡張子" do
+            @ext.should== :csv
+          end
+        end
+      end
+      context "yamlのみのとき" do
+        context "データをパースして必要な情報を返す" do
+          before do
+            @table_name, @file_name, @ext = Flextures::Loader::file_exist(table:'users', file:"onlyyaml")
+          end
+
+          it "データは３つ" do
+            Flextures::Loader::file_exist(table:'users', file:"onlyyml").size.should==3
+          end
+
+          it "テーブル名" do
+            @table_name.should=="users"
+          end
+
+          it "ロードするファイル名" do
+            @file_name.should=="spec/fixtures/onlyyaml"
+          end
+
+          it "ファイルの拡張子" do
+            @ext.should== :yml
+          end
+        end
+      end
+      context "両方あるとき" do
+        context "csv優先で探索して必要な情報を返す" do
+          before do
+            @table_name, @file_name, @ext = Flextures::Loader::file_exist(table:'users', file:"bothexist")
+          end
+
+          it "データは３つ" do
+            Flextures::Loader::file_exist(table:'users', file:"bothexist").size.should==3
+          end
+
+          it "テーブル名" do
+            @table_name.should=="users"
+          end
+
+          it "ロードするファイル名" do
+            @file_name.should=="spec/fixtures/bothexist"
+          end
+
+          it "ファイルの拡張子" do
+            @ext.should== :csv
+          end
+        end
+      end
+      context "両方存在しないとき" do
+        context "データをパースして必要な情報を返す" do
+          before do
+            @table_name, @file_name, @ext = Flextures::Loader::file_exist(table:'users', file:"notexist")
+          end
+
+          it "データは３つ" do
+            Flextures::Loader::file_exist(table:'users', file:"notexist").size.should==3
+          end
+
+          it "テーブル名" do
+            @table_name.should=="users"
+          end
+
+          it "ロードするファイル名" do
+            @file_name.should=="spec/fixtures/notexist"
+          end
+
+          it "ファイルの拡張子" do
+            @ext.should== nil
+          end
+        end
+      end
+    end
+
+    describe "::load " do
       before do
         `rm spec/fixtures/users.csv 2>/dev/null`
         `rm spec/fixtures/users.yml 2>/dev/null`
+        `cp spec/fixtures_bkup/users_load.csv spec/fixtures/users.csv`
         `cp spec/fixtures_bkup/users_load.yml spec/fixtures/users.yml`
       end
 
       before { User.delete_all }
 
-      it "" do
-        Flextures::Loader::yml table: "users"
+      it "はcsv優先でファイルをロードする" do
+        Flextures::Loader::load table: "users"
         User.first.id.should == 1
       end
 
-      it " file: 'ファイル名' で yml ファイルを指定すると、そのファイルを読み込んでテーブルに反映する" do
-        klass = Class.new(ActiveRecord::Base){ |o| o.table_name= "users" }
-        Flextures::Loader::yml table: "users", file: "user_another"
-        klass.first.name.should == 'jjj'
+      it "はfile: 'ファイル名' で指定した場合、そのファイルを取り出す" do
+        method = Flextures::Loader::load table: "users", file: "user_another2"
+        User.first.name.should == 'ggg'
       end
     end
 
-    describe "csv " do
+    describe "::csv " do
       before do
         `rm spec/fixtures/users.csv 2>/dev/null`
         `rm spec/fixtures/users.yml 2>/dev/null`
@@ -225,24 +332,24 @@ describe Flextures do
       after { User.delete_all }
     end
 
-    describe "load " do
+    describe "::yml" do
       before do
         `rm spec/fixtures/users.csv 2>/dev/null`
         `rm spec/fixtures/users.yml 2>/dev/null`
-        `cp spec/fixtures_bkup/users_load.csv spec/fixtures/users.csv`
         `cp spec/fixtures_bkup/users_load.yml spec/fixtures/users.yml`
       end
 
       before { User.delete_all }
 
-      it "はcsv優先でファイルをロードする" do
-        Flextures::Loader::load table: "users"
+      it "" do
+        Flextures::Loader::yml table: "users"
         User.first.id.should == 1
       end
 
-      it "はfile: 'ファイル名' で指定した場合、そのファイルを取り出す" do
-        method = Flextures::Loader::load table: "users", file: "user_another2"
-        User.first.name.should == 'ggg'
+      it " file: 'ファイル名' で yml ファイルを指定すると、そのファイルを読み込んでテーブルに反映する" do
+        klass = Class.new(ActiveRecord::Base){ |o| o.table_name= "users" }
+        Flextures::Loader::yml table: "users", file: "user_another"
+        klass.first.name.should == 'jjj'
       end
     end
   end
