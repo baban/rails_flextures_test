@@ -6,7 +6,6 @@ Flextures::Factory.define :users do |f|
 end
 
 Flextures::Factory.define :upload_images do |f|
-  p f
   filename = Rails.root.to_path + "/" + f.name
   f.name = f.name
   f.content = IO.read("#{filename}")
