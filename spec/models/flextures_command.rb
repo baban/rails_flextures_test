@@ -75,7 +75,7 @@ describe Flextures::Rake::Command do
         it "読めなかったFileはnilで返す" do
           ENV.delete "TABLE"
           filenames = Flextures::Rake::Command::csvload
-          filenames.should == ["spec/fixtures/guilds.csv", nil, "spec/fixtures/s_user.csv", nil, "spec/fixtures/upload_images.csv", nil]
+          filenames.should == ["spec/fixtures/guilds.csv", nil, "spec/fixtures/s_user.csv", "spec/fixtures/upload_images.csv", nil]
         end
       end
     end
@@ -99,7 +99,6 @@ describe Flextures::Rake::Command do
           filenames.should == [
             "spec/fixtures/guilds.yml",
             "spec/fixtures/items.yml",
-            nil,
             nil,
             nil,
             "spec/fixtures/users.yml"

@@ -52,7 +52,7 @@ describe Flextures do
   context "ARGS::parse" do
     it " 指定がないときは全テーブル名前取得 " do
       format = Flextures::ARGS.parse
-      format.size.should == ActiveRecord::Base.connection.tables.size
+      format.size.should == ActiveRecord::Base.connection.tables.size - 1
     end
 
     it " TABLE=テーブル名 を設定している場合 " do
