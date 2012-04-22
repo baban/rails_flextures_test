@@ -1,0 +1,40 @@
+guilds_0:
+  id: 1
+  name: 進撃の騎士団
+  comment: aaaa
+  rank: 2
+  guild_point: 25
+  money: 1000
+  member_count: 10
+  created_at: 2011-11-21 00:00:00 UTC
+  updated_at: 2011-11-21 00:00:00 UTC
+guilds_1:
+  id: 2
+  name: 龍神の騎士団
+  comment: bbbb
+  rank: 1
+  guild_point: 10
+  money: 2500
+  member_count: 5
+  created_at: 2011-11-21 00:00:00 UTC
+  updated_at: 2011-11-21 00:00:00 UTC
+guilds_2:
+  id: 3
+  name: 薔薇十字団
+  comment: cccc
+  rank: 1
+  guild_point: 1
+  money: 50
+  member_count: 2
+  created_at: 2011-11-21 00:00:00 UTC
+  updated_at: 2011-11-21 00:00:00 UTC
+guilds_3:
+  id: 4
+  name: テンプル騎士団
+  comment: dddd
+  rank: 1
+  guild_point: 1
+  money: 50
+  member_count: 2
+  created_at: 2011-11-21 00:00:00 UTC
+  updated_at: 2011-11-21 00:00:00 UTC

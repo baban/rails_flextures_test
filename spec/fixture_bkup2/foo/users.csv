@@ -1,0 +1,4 @@
+"id","name","sex","profile_comment","level","exp","guild_id","hp","mp","max_hp","max_mp","attack","defence","base_attack","base_defence","created_at","updated_at"
+1,"foo",1,"fooo",1,10,1,10,10,10,10,10,10,10,10,"2011-11-21 00:00:00 UTC","2011-11-21 00:00:00 UTC"
+2,"kkk",1,"bbb",1,10,1,10,10,10,10,10,10,10,10,"2011-11-21 00:00:00 UTC","2011-11-21 00:00:00 UTC"
+3,"lll",1,"ccc",1,10,1,10,10,10,10,10,10,10,10,"2011-11-21 00:00:00 UTC","2011-11-21 00:00:00 UTC"

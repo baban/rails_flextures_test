@@ -31,7 +31,7 @@ describe Flextures::Rake::Command do
       context "テーブル名で絞ってある" do
         it " TABLE=テーブル名 を設定している場合 " do
           ENV["TABLE"] = "users"
-          #Flextures::Rake::Command::ymldump
+          Flextures::Rake::Command::ymldump
         end
       end
     end
