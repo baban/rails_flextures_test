@@ -45,10 +45,23 @@ describe Flextures::Rake::Command do
       context "テーブル名で絞ってLoad" do
         it " TABLE=テーブル名 を設定している場合 " do
           ENV["TABLE"] = "users"
-          Flextures::Rake::Command::load
+          filenames = Flextures::Rake::Command::load
+          filenames.should == ["spec/fixtures/users.yml"]
         end
       end
       context "全件Load" do
+        it "" do
+          ENV.delete "TABLE"
+          filenames = Flextures::Rake::Command::load
+          filenames.should == [
+            "spec/fixtures/guilds.csv",
+            "spec/fixtures/items.yml",
+            "spec/fixtures/s_user.csv",
+            nil,
+            "spec/fixtures/upload_images.csv",
+            "spec/fixtures/users.yml"
+          ]
+        end
       end
     end
     describe "::csvload" do

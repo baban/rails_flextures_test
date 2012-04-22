@@ -140,12 +140,19 @@ describe Flextures do
   end
 
   # テーブルをモデル化出来ているかテスト
-  describe "create_model" do
+  describe ".create_model" do
     %W{users}.each do |table_name|
       it "(#{table_name})" do
         table_model = Flextures.create_model table_name
         table_model.table_name.should == table_name
       end
+    end
+  end
+
+  describe ".deletable_tables" do
+    it "消去できるテーブルを返す" do
+       table_names = Flextures::deletable_tables
+       table_names.should == ["guilds", "items", "s_user", "upload_images", "users"]
     end
   end
 
