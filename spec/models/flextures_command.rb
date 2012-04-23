@@ -57,7 +57,6 @@ describe Flextures::Rake::Command do
             "spec/fixtures/guilds.csv",
             "spec/fixtures/items.yml",
             "spec/fixtures/s_user.csv",
-            nil,
             "spec/fixtures/upload_images.csv",
             "spec/fixtures/users.yml"
           ]
