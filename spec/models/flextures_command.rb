@@ -7,7 +7,7 @@ describe Flextures::Rake::Command do
   context "データダンプ関連" do
     before do
       `rm spec/fixtures/* 2>/dev/null`
-      `cp spec/fixtures_bkup2/* spec/fixtures/`
+      `cp spec/fixtures_bkup2/* spec/fixtures/ 2>/dev/null`
     end
 
     describe "::dump" do
@@ -40,7 +40,8 @@ describe Flextures::Rake::Command do
     end
 
     after do
-      `rm spec/fixtures/users.csv 2>/dev/null`
+      `rm spec/fixtures/* 2>/dev/null`
+      `cp spec/fixtures_bkup2/* spec/fixtures/ 2>/dev/null`
     end
   end
 
