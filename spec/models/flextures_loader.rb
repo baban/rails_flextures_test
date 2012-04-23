@@ -116,6 +116,7 @@ describe Flextures do
           s="aa aaa"
           Flextures::Loader::TRANSLATER[:string].call(s).should === s
         end
+        # "@#%{}|[]&:`'>?~"
       end
       describe :text do
         it "null" do
