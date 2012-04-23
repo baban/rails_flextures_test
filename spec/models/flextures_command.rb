@@ -18,6 +18,10 @@ describe Flextures::Rake::Command do
         end
       end
       context "全件吐き出し" do
+        it " TABLE=テーブル名 を設定している場合 " do
+          ENV.delete "TABLE"
+          Flextures::Rake::Command::dump
+        end
       end
     end
 
@@ -28,12 +32,24 @@ describe Flextures::Rake::Command do
           Flextures::Rake::Command::csvdump
         end
       end
+      context "全件吐き出し" do
+        it " TABLE=テーブル名 を設定している場合 " do
+          ENV.delete "TABLE"
+          Flextures::Rake::Command::csvdump
+        end
+      end
     end
 
     describe "::ymldump" do
       context "テーブル名で絞ってある" do
         it " TABLE=テーブル名 を設定している場合 " do
           ENV["TABLE"] = "users"
+          Flextures::Rake::Command::ymldump
+        end
+      end
+      context "全件吐き出し" do
+        it " TABLE=テーブル名 を設定している場合 " do
+          ENV.delete "TABLE"
           Flextures::Rake::Command::ymldump
         end
       end
