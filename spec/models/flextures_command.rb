@@ -14,13 +14,16 @@ describe Flextures::Rake::Command do
       context "テーブル名で絞ってある" do
         it " TABLE=テーブル名 を設定している場合 " do
           ENV["TABLE"] = "users"
-          Flextures::Rake::Command::dump
+          filenames = Flextures::Rake::Command::dump
+          filenames.should == ["spec/fixtures/users.csv"]
         end
       end
       context "全件吐き出し" do
         it " TABLE=テーブル名 を設定している場合 " do
           ENV.delete "TABLE"
-          Flextures::Rake::Command::dump
+          filenames = Flextures::Rake::Command::dump
+          filenames.should ==  ["spec/fixtures/guilds.csv", "spec/fixtures/items.csv",
+                                "spec/fixtures/s_user.csv", "spec/fixtures/upload_images.csv", "spec/fixtures/users.csv"]
         end
       end
     end
@@ -29,13 +32,16 @@ describe Flextures::Rake::Command do
       context "テーブル名で絞ってある" do
         it " TABLE=テーブル名 を設定している場合 " do
           ENV["TABLE"] = "users"
-          Flextures::Rake::Command::csvdump
+          filenames = Flextures::Rake::Command::csvdump
+          filenames.should == ["spec/fixtures/users.csv"]
         end
       end
       context "全件吐き出し" do
         it " TABLE=テーブル名 を設定している場合 " do
           ENV.delete "TABLE"
-          Flextures::Rake::Command::csvdump
+          filenames = Flextures::Rake::Command::csvdump
+          filenames.should ==  ["spec/fixtures/guilds.csv", "spec/fixtures/items.csv",
+                                "spec/fixtures/s_user.csv", "spec/fixtures/upload_images.csv", "spec/fixtures/users.csv"]
         end
       end
     end
@@ -44,13 +50,16 @@ describe Flextures::Rake::Command do
       context "テーブル名で絞ってある" do
         it " TABLE=テーブル名 を設定している場合 " do
           ENV["TABLE"] = "users"
-          Flextures::Rake::Command::ymldump
+          filenames = Flextures::Rake::Command::ymldump
+          filenames.should == ["spec/fixtures/users.yml"]
         end
       end
       context "全件吐き出し" do
         it " TABLE=テーブル名 を設定している場合 " do
           ENV.delete "TABLE"
-          Flextures::Rake::Command::ymldump
+          filenames = Flextures::Rake::Command::ymldump
+          filenames.should == ["spec/fixtures/guilds.yml", "spec/fixtures/items.yml", 
+             "spec/fixtures/s_user.yml", "spec/fixtures/upload_images.yml", "spec/fixtures/users.yml"]
         end
       end
     end
