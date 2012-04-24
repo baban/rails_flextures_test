@@ -11,6 +11,9 @@ gem 'faker-japanese'
 gem "spork"
 gem "factory_girl_rails"
 gem "aspectr"
+gem "pry"
+gem "pry-doc"
+gem "pry-rails"
 
 group :assets do
 #  gem 'sass-rails',   '~> 3.2.3'
