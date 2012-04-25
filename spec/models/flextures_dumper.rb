@@ -122,10 +122,6 @@ describe Flextures do
           it "false" do
             Flextures::Dumper::TRANSLATER[:string].call( false, :yml ).should === false
           end
-          it "配列ライク" do
-            #s = "[hoge,:fsaC)]"
-            #Flextures::Dumper::TRANSLATER[:string].call( s, :yml ).should === '[hoge,:fsaC)]'
-          end
         end
         context :csv do
         end
@@ -219,7 +215,9 @@ describe Flextures do
 
       describe "空文字" do
         before do
-          User.create( name:"hoge", sex: 0, profile_comment:"", level: 1, exp: 0, guild_id: 0, hp: 10, mp: 0 )
+          user = Factory.build
+          user.profile_comment
+          user.save
         end
         
         it "nullをdumpする" do
@@ -232,6 +230,10 @@ describe Flextures do
           end
         end
       end
+      # TODO: 特殊文字
+      # TODO: ランダム文字生成でのテスト
+      # TODO: 文字列型以外でのテスト
+      # TODO: バイナリ型でのテスト
     end
 
     # dumpしたyamlを比較する
@@ -349,7 +351,10 @@ describe Flextures do
             end
           end
         end
-
+        
+        # TODO: ランダム文字生成でのテスト
+        # TODO: 文字列型以外でのテスト
+        # TODO: バイナリ型でのテスト
       end
     end
     after do
