@@ -324,9 +324,13 @@ describe Flextures do
               yaml = YAML.load_file( Rails.root.to_path+"/spec/fixtures/users.yml" )
               yaml["users_0"]["name"].should == "ii a  i"
             end
-
           end
         end
+
+        context "特殊文字" do
+          # "[]{}|#@~!'\"$&^<>?//-+=;:.,*'\`()"
+        end
+
       end
     end
     after do
