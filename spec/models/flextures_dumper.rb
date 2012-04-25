@@ -328,6 +328,26 @@ describe Flextures do
         end
 
         context "特殊文字" do
+          let(:user){ { name:"hoge", sex: 0, level: 1, exp: 0, guild_id: 0, hp: 10, mp: 0 } }
+          context "括弧" do
+            before do
+              @dump_method = ->{
+                User.create( user )
+                Flextures::Dumper::yml table: "users"
+                YAML.load_file( Rails.root.to_path+"/spec/fixtures/users.yml" )
+              }
+              User.delete_all
+            end
+            ["[","]","{","}","|","#","@","~","!","'","$","&","^","<",">","?","-","+","=",";",":",".",",","*","`","(",")"].each do |c|
+              "\"'"
+              it c do
+                user[:name] = c+"hoge"
+                @dump_method.call
+                yaml = @dump_method.call
+                yaml["users_0"]["name"].should == user[:name]
+              end
+            end
+          end
           # "[]{}|#@~!'\"$&^<>?//-+=;:.,*'\`()"
         end
 
