@@ -84,6 +84,8 @@ describe Flextures do
       ENV["DIR"] = "test/fixtures/"
       format = Flextures::ARGS.parse
       format.first[:dir].should == "test/fixtures/"
+      ENV.delete "M"
+      ENV.delete "DIR"
     end
 
     it " D=でもダンプするディレクトリを変更できる " do
@@ -91,6 +93,8 @@ describe Flextures do
       ENV["D"] = "test/fixtures/"
       format = Flextures::ARGS.parse
       format.first[:dir].should == "test/fixtures/"
+      ENV.delete "M"
+      ENV.delete "D"
     end
 
     it " FIXTURES=でもダンプするファイルを変更できる " do

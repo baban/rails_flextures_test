@@ -215,8 +215,8 @@ describe Flextures do
 
       describe "空文字" do
         before do
-          user = Factory.build
-          user.profile_comment
+          user = Factory.build(:user)
+          user.profile_comment=""
           user.save
         end
         
