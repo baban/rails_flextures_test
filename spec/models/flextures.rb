@@ -50,6 +50,16 @@ describe Flextures do
 # オプションでデータを厳密に読んで矛盾する列で エラーをraiseする
 #
   context "ARGS::parse" do
+    before do
+      # ENV.delete "TABLE"
+      # ENV.delete "T"
+      # ENV.delete "DIR"
+      # ENV.delete "D"
+      # ENV.delete "MODEL"
+      # ENV.delete "M"
+      # ENV.delete "FIXTURES"
+    end
+
     it " 指定がないときは全テーブル名前取得 " do
       format = Flextures::ARGS.parse
       format.size.should == ActiveRecord::Base.connection.tables.size - 1
@@ -84,8 +94,6 @@ describe Flextures do
       ENV["DIR"] = "test/fixtures/"
       format = Flextures::ARGS.parse
       format.first[:dir].should == "test/fixtures/"
-      ENV.delete "M"
-      ENV.delete "DIR"
     end
 
     it " D=でもダンプするディレクトリを変更できる " do
@@ -93,8 +101,6 @@ describe Flextures do
       ENV["D"] = "test/fixtures/"
       format = Flextures::ARGS.parse
       format.first[:dir].should == "test/fixtures/"
-      ENV.delete "M"
-      ENV.delete "D"
     end
 
     it " FIXTURES=でもダンプするファイルを変更できる " do
