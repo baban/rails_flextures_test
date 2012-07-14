@@ -215,7 +215,7 @@ describe Flextures do
 
       describe "空文字" do
         before do
-          user = Factory.build(:user)
+          user = FactoryGirl.build(:user)
           user.profile_comment=""
           user.save
         end
@@ -330,7 +330,7 @@ describe Flextures do
         end
 
         context "特殊文字" do
-          let(:user){ Factory.build(:user) }
+          let(:user){ FactoryGirl.build(:user) }
           context "括弧" do
             before do
               @dump_method = ->{
