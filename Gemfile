@@ -3,14 +3,16 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.2'
 
 gem 'mysql2', '0.3.11'
-gem 'rspec'
-gem 'rspec-rails'
-gem 'flextures', '1.9.10'
-gem 'faker'
-gem 'faker-japanese'
-gem "spork"
-gem "factory_girl_rails"
-gem "aspectr"
+gem 'rspec', "2.11.0"
+gem "rspec-core", "2.11.0"
+gem 'rspec-rails', "2.11.0"
+gem 'flextures', '1.9.14'
+gem 'faker', "1.0.1"
+gem 'faker-japanese', "0.0.1"
+gem "spork", "0.9.2"
+gem "factory_girl_rails", "3.5.0"
+gem "aspectr", "0.3.7"
+
 
 group :development, :test do
   gem "pry"
@@ -21,9 +23,9 @@ group :development, :test do
   gem 'pry-nav'
   gem 'pry-remote'
   gem 'pry-stack_explorer'
-  gem 'ruby-debug19'
-  gem 'ruby-debug-base19x', '>= 0.11.30.pre10'
-  gem 'linecache19', git: 'https://github.com/mark-moseley/linecache.git', ref: '869c6a65155068415925067e480741bd0a71527e'
+  #gem 'ruby-debug19'
+  #gem 'ruby-debug-base19x', '>= 0.11.30.pre10'
+  #gem 'linecache19', git: 'https://github.com/mark-moseley/linecache.git', ref: '869c6a65155068415925067e480741bd0a71527e'
 end
 
 group :assets do
