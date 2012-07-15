@@ -162,7 +162,7 @@ describe Flextures do
   describe ".deletable_tables" do
     it "消去できるテーブルを返す" do
        table_names = Flextures::deletable_tables
-       table_names.should == ["guilds", "items", "s_user", "upload_images", "users"]
+       table_names.should == ["admin_users","guilds", "items", "s_user", "upload_images", "users"]
     end
   end
 

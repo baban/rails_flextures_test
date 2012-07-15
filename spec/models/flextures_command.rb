@@ -22,7 +22,7 @@ describe Flextures::Rake::Command do
         it " TABLE=テーブル名 を設定している場合 " do
           ENV.delete "TABLE"
           filenames = Flextures::Rake::Command::dump
-          filenames.should ==  ["spec/fixtures/guilds.csv", "spec/fixtures/items.csv",
+          filenames.should ==  ["spec/fixtures/admin_users.csv", "spec/fixtures/guilds.csv", "spec/fixtures/items.csv",
                                 "spec/fixtures/s_user.csv", "spec/fixtures/upload_images.csv", "spec/fixtures/users.csv"]
         end
       end
@@ -40,7 +40,7 @@ describe Flextures::Rake::Command do
         it " TABLE=テーブル名 を設定している場合 " do
           ENV.delete "TABLE"
           filenames = Flextures::Rake::Command::csvdump
-          filenames.should ==  ["spec/fixtures/guilds.csv", "spec/fixtures/items.csv",
+          filenames.should ==  ["spec/fixtures/admin_users.csv", "spec/fixtures/guilds.csv", "spec/fixtures/items.csv",
                                 "spec/fixtures/s_user.csv", "spec/fixtures/upload_images.csv", "spec/fixtures/users.csv"]
         end
       end
@@ -58,7 +58,7 @@ describe Flextures::Rake::Command do
         it " TABLE=テーブル名 を設定している場合 " do
           ENV.delete "TABLE"
           filenames = Flextures::Rake::Command::ymldump
-          filenames.should == ["spec/fixtures/guilds.yml", "spec/fixtures/items.yml", 
+          filenames.should == ["spec/fixtures/admin_users.yml", "spec/fixtures/guilds.yml", "spec/fixtures/items.yml", 
              "spec/fixtures/s_user.yml", "spec/fixtures/upload_images.yml", "spec/fixtures/users.yml"]
         end
       end
@@ -85,6 +85,7 @@ describe Flextures::Rake::Command do
           ENV.delete "TABLE"
           filenames = Flextures::Rake::Command::load
           filenames.should == [
+            "spec/fixtures/admin_users.csv",
             "spec/fixtures/guilds.csv",
             "spec/fixtures/items.yml",
             "spec/fixtures/s_user.csv",
@@ -107,7 +108,7 @@ describe Flextures::Rake::Command do
         it "読めなかったFileはnilで返す" do
           ENV.delete "TABLE"
           filenames = Flextures::Rake::Command::csvload
-          filenames.should == ["spec/fixtures/guilds.csv", nil, "spec/fixtures/s_user.csv", "spec/fixtures/upload_images.csv", nil]
+          filenames.should == ["spec/fixtures/admin_users.csv","spec/fixtures/guilds.csv", nil, "spec/fixtures/s_user.csv", "spec/fixtures/upload_images.csv", nil]
         end
       end
     end
@@ -132,6 +133,7 @@ describe Flextures::Rake::Command do
           ENV.delete "TABLE"
           filenames = Flextures::Rake::Command::ymlload
           filenames.should == [
+            nil,
             "spec/fixtures/guilds.yml",
             "spec/fixtures/items.yml",
             nil,
