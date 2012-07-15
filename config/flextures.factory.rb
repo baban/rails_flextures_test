@@ -12,5 +12,14 @@ Flextures::Factory.define :upload_images do |f|
   f
 end
 
-Flextures::DumpFilter.define :users do |f|
+Flextures::Factory.define :admin_users do |f|
+  p :preferences
+  p f.preferences
+  f.preferences = Base64.decode64(f.preferences)
+  p f.preferences
+  f
 end
+
+Flextures::DumpFilter.define :admin_users, {
+  preferences:->(v){ p(:preferences); Base64.encode64(v) }
+}
