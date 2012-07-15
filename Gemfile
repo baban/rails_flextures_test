@@ -6,13 +6,12 @@ gem 'mysql2', '0.3.11'
 gem 'rspec', "2.11.0"
 gem "rspec-core", "2.11.0"
 gem 'rspec-rails', "2.11.0"
-gem 'flextures', '1.9.14'
+gem 'flextures', '1.9.15'
 gem 'faker', "1.0.1"
 gem 'faker-japanese', "0.0.1"
 gem "spork", "0.9.2"
 gem "factory_girl_rails", "3.5.0"
 gem "aspectr", "0.3.7"
-
 
 group :development, :test do
   gem "pry"
@@ -31,7 +30,7 @@ end
 group :assets do
 #  gem 'sass-rails',   '~> 3.2.3'
 #  gem 'coffee-rails', '~> 3.2.1'
-#:wq  gem 'uglifier', '>= 1.0.3'
+#  gem 'uglifier', '>= 1.0.3'
 end
 
 gem 'jquery-rails'

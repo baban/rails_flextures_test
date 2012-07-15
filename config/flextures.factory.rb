@@ -12,3 +12,5 @@ Flextures::Factory.define :upload_images do |f|
   f
 end
 
+Flextures::DumpFilter.define :users do |f|
+end
