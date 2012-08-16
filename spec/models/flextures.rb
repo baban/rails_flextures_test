@@ -45,9 +45,10 @@ describe Flextures do
 # ActiveRecord::TestFixtures
 # Mock関数を作っておく
 #
-# procの関数合成を出来る*演算子を定義する
-#
 # オプションでデータを厳密に読んで矛盾する列で エラーをraiseする
+#
+# flextures { cache: true }, :users
+# でテーブルの中身がキャッシュされている場合、再ロードは行わない
 #
   context "ARGS::parse" do
     before do

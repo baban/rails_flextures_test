@@ -82,6 +82,22 @@ describe Flextures do
             klass.count.should==4
           end
         end
+
+        context "ロード時にオプションを指定" do
+          context "空オプション" do
+            flextures( {}, :guilds )
+            it "正常にロードできる" do
+              klass = Guild
+              klass.count.should==4
+            end
+          end
+          context "cacheオプション" do
+            context "trueのとき" do
+            end
+            context "falseのとき" do
+            end
+          end
+        end
       end
     end
 
