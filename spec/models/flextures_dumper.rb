@@ -68,14 +68,20 @@ describe Flextures do
       end
       describe :decimal do
         context :yml do
+          it "integer" do
+            expect( Flextures::Dumper::TRANSLATER[:decimal].call( 10, :yml ) ).to eq 10
+          end
+          it "float" do
+            expect( Flextures::Dumper::TRANSLATER[:decimal].call( 1.5, :yml ) ).to eq 1.5
+          end
           it "null" do
-            Flextures::Dumper::TRANSLATER[:decimal].call( nil, :yml ).should === "null"
+            expect( Flextures::Dumper::TRANSLATER[:decimal].call( nil, :yml ) ).to eq "null"
           end
           it "0" do
-            Flextures::Dumper::TRANSLATER[:decimal].call( 0, :yml ).should === 0
+            expect( Flextures::Dumper::TRANSLATER[:decimal].call( 0, :yml ) ).to eq 0
           end
           it "false" do
-            Flextures::Dumper::TRANSLATER[:decimal].call( false, :yml ).should === 0
+            expect( Flextures::Dumper::TRANSLATER[:decimal].call( false, :yml ) ).to eq 0
           end
         end
         context :csv do
@@ -83,14 +89,20 @@ describe Flextures do
       end
       describe :float do
         context :yml do
+          it "integer" do
+            expect( Flextures::Dumper::TRANSLATER[:float].call( 10, :yml ) ).to eq 10
+          end
+          it "float" do
+            expect( Flextures::Dumper::TRANSLATER[:float].call( 1.5, :yml ) ).to eq 1.5
+          end
           it "null" do
-            Flextures::Dumper::TRANSLATER[:float].call( nil, :yml ).should === "null"
+            expect( Flextures::Dumper::TRANSLATER[:float].call( nil, :yml ) ).to eq "null"
           end
           it "0" do
-            Flextures::Dumper::TRANSLATER[:float].call( 0, :yml ).should === 0
+            expect( Flextures::Dumper::TRANSLATER[:float].call( 0, :yml ) ).to eq 0
           end
           it "false" do
-            Flextures::Dumper::TRANSLATER[:float].call( false, :yml ).should === 0
+            expect( Flextures::Dumper::TRANSLATER[:float].call( false, :yml ) ).to eq 0
           end
         end
         context :csv do
@@ -98,14 +110,20 @@ describe Flextures do
       end
       describe :integer do
         context :yml do
+          it "integer" do
+            expect( Flextures::Dumper::TRANSLATER[:integer].call( 10, :yml ) ).to eq 10
+          end
+          it "float" do
+            expect( Flextures::Dumper::TRANSLATER[:integer].call( 1.5, :yml ) ).to eq 1
+          end
           it "null" do
-            Flextures::Dumper::TRANSLATER[:integer].call( nil, :yml ).should === "null"
+            expect( Flextures::Dumper::TRANSLATER[:integer].call( nil, :yml ) ).to eq "null"
           end
           it "0" do
-            Flextures::Dumper::TRANSLATER[:integer].call( 0, :yml ).should === 0
+            expect( Flextures::Dumper::TRANSLATER[:integer].call( 0, :yml ) ).to eq 0
           end
           it "false" do
-            Flextures::Dumper::TRANSLATER[:integer].call( false, :yml ).should === 0
+            expect( Flextures::Dumper::TRANSLATER[:integer].call( false, :yml ) ).to eq 0
           end
         end
         context :csv do
@@ -114,13 +132,13 @@ describe Flextures do
       describe :string do
         context :yml do
           it "null" do
-            Flextures::Dumper::TRANSLATER[:string].call( nil, :yml ).should === "null"
+            expect( Flextures::Dumper::TRANSLATER[:string].call( nil, :yml ) ).to eq "null"
           end
           it "空文字" do
-            Flextures::Dumper::TRANSLATER[:string].call( "", :yml ).should === '""'
+            expect( Flextures::Dumper::TRANSLATER[:string].call( "", :yml ) ).to eq '""'
           end
           it "false" do
-            Flextures::Dumper::TRANSLATER[:string].call( false, :yml ).should === false
+            expect( Flextures::Dumper::TRANSLATER[:string].call( false, :yml ) ).to eq false
           end
         end
         context :csv do
@@ -193,48 +211,63 @@ describe Flextures do
             @base = IO.read Rails.root.to_path<< "/spec/fixtures/users.csv"
             Flextures::Dumper::csv table: "users"
             @result = IO.read Rails.root.to_path<< "/spec/fixtures/users.csv"
-            @base.should == @result
+            expect( @base ).to eq @result
           end
         end
       end
-
-      describe :null do
-        before do
-          User.create( name:"hoge", sex: 0, level: 1, exp: 0, guild_id: 0, hp: 10, mp: 0 )
+      context "出力先変更テスト" do
+        flextures :users
+        context "ディレクトリ指定" do
+          it "ディレクトリ出ている" do
+            @base = IO.read Rails.root.to_path+"/spec/fixtures/users.csv"
+            Flextures::Dumper::csv table: "users", dir:"hoge"
+            @result = IO.read Rails.root.to_path+"/spec/fixtures/hoge/users.csv"
+            expect( @base ).to eq @result
+          end
+          after do
+            FileUtils.rm Rails.root.to_path+"/spec/fixtures/hoge/users.csv"
+          end
+        end
+      end
+      context "特殊文字のテスト" do
+        describe :null do
+          before do
+            User.create( name:"hoge", sex: 0, level: 1, exp: 0, guild_id: 0, hp: 10, mp: 0 )
+          end
+        
+          it "nullをdumpする" do
+            Flextures::Dumper::csv table: "users"
+            path = Rails.root.to_path<< "/spec/fixtures/users.csv"
+            CSV.open( path ) do |csv|
+              keys = csv.shift
+              values = csv.first
+              values[3].should == nil
+            end
+          end
         end
         
-        it "nullをdumpする" do
-          Flextures::Dumper::csv table: "users"
-          path = Rails.root.to_path<< "/spec/fixtures/users.csv"
-          CSV.open( path ) do |csv|
-            keys = csv.shift
-            values = csv.first
-            values[3].should == nil
+        describe "空文字" do
+          before do
+            user = FactoryGirl.build(:user)
+            user.profile_comment=""
+            user.save
+          end
+          
+          it "nullをdumpする" do
+            Flextures::Dumper::csv table: "users"
+            path = Rails.root.to_path<< "/spec/fixtures/users.csv"
+            CSV.open( path ) do |csv|
+              keys = csv.shift
+              values = csv.first
+              values[3].should == ""
+            end
           end
         end
+        # TODO: 特殊文字
+        # TODO: ランダム文字生成でのテスト
+        # TODO: 文字列型以外でのテスト
+        # TODO: バイナリ型でのテスト
       end
-
-      describe "空文字" do
-        before do
-          user = FactoryGirl.build(:user)
-          user.profile_comment=""
-          user.save
-        end
-        
-        it "nullをdumpする" do
-          Flextures::Dumper::csv table: "users"
-          path = Rails.root.to_path<< "/spec/fixtures/users.csv"
-          CSV.open( path ) do |csv|
-            keys = csv.shift
-            values = csv.first
-            values[3].should == ""
-          end
-        end
-      end
-      # TODO: 特殊文字
-      # TODO: ランダム文字生成でのテスト
-      # TODO: 文字列型以外でのテスト
-      # TODO: バイナリ型でのテスト
     end
 
     # dumpしたyamlを比較する
