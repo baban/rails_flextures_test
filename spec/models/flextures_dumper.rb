@@ -9,7 +9,7 @@ describe Flextures do
       describe :binary do
         context :yml do
           it "null" do
-            Flextures::Dumper::TRANSLATER[:binary].call( nil, :yml ).should === "null"
+            expect( Flextures::Dumper::TRANSLATER[:binary].call( nil, :yml ) ).to eq "null"
           end
         end
         context :csv do
@@ -18,19 +18,19 @@ describe Flextures do
       describe :boolean do
         context :yml do
           it "null" do
-            Flextures::Dumper::TRANSLATER[:boolean].call( nil, :yml ).should === "null"
+            expect( Flextures::Dumper::TRANSLATER[:boolean].call( nil, :yml ) ).to eq "null"
           end
           it "0" do
-            Flextures::Dumper::TRANSLATER[:boolean].call( 0, :yml ).should === false
+            expect( Flextures::Dumper::TRANSLATER[:boolean].call( 0, :yml ) ).to eq false
           end
           it "1" do
-            Flextures::Dumper::TRANSLATER[:boolean].call( 1, :yml ).should === true
+            expect( Flextures::Dumper::TRANSLATER[:boolean].call( 1, :yml ) ).to eq true
           end
           it "空文字" do
-            Flextures::Dumper::TRANSLATER[:boolean].call( "", :yml ).should === false
+            expect( Flextures::Dumper::TRANSLATER[:boolean].call( "", :yml ) ).to eq false
           end
           it "文字列" do
-            Flextures::Dumper::TRANSLATER[:boolean].call( "Hello", :yml ).should === true
+            expect( Flextures::Dumper::TRANSLATER[:boolean].call( "Hello", :yml ) ).to eq true
           end
         end
         context :csv do
@@ -117,7 +117,7 @@ describe Flextures do
             Flextures::Dumper::TRANSLATER[:string].call( nil, :yml ).should === "null"
           end
           it "空文字" do
-            Flextures::Dumper::TRANSLATER[:string].call( "", :yml ).should === ""
+            Flextures::Dumper::TRANSLATER[:string].call( "", :yml ).should === '""'
           end
           it "false" do
             Flextures::Dumper::TRANSLATER[:string].call( false, :yml ).should === false
@@ -129,13 +129,13 @@ describe Flextures do
       describe :text do
         context :yml do
           it "null" do
-            Flextures::Dumper::TRANSLATER[:string].call( nil, :yml ).should === "null"
+            expect( Flextures::Dumper::TRANSLATER[:string].call( nil, :yml ) ).to eq "null"
           end
           it "空文字" do
-            Flextures::Dumper::TRANSLATER[:string].call( "", :yml ).should === ""
+            expect( Flextures::Dumper::TRANSLATER[:string].call( "", :yml ) ).to eq '""'
           end
           it "false" do
-            Flextures::Dumper::TRANSLATER[:string].call( false, :yml ).should === false
+            expect( Flextures::Dumper::TRANSLATER[:string].call( false, :yml ) ).to eq false
           end
         end
         context :csv do
@@ -144,13 +144,13 @@ describe Flextures do
       describe :time do
         context :yml do
           it "null" do
-            Flextures::Dumper::TRANSLATER[:time].call( nil, :yml ).should === "null"
+            expect( Flextures::Dumper::TRANSLATER[:time].call( nil, :yml ) ).to eq "null"
           end
           it "空文字" do
-            Flextures::Dumper::TRANSLATER[:time].call( "", :yml ).should === "null"
+            expect( Flextures::Dumper::TRANSLATER[:time].call( "", :yml ) ).to eq "null"
           end
           it "false" do
-            Flextures::Dumper::TRANSLATER[:time].call( false, :yml ).should === "null"
+            expect( Flextures::Dumper::TRANSLATER[:time].call( false, :yml ) ).to eq "null"
           end
         end
         context :csv do
