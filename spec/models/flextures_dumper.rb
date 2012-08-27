@@ -218,14 +218,47 @@ describe Flextures do
       context "出力先変更テスト" do
         flextures :users
         context "ディレクトリ指定" do
-          it "ディレクトリ出ている" do
+          it "指定したディレクトリに出ている" do
             @base = IO.read Rails.root.to_path+"/spec/fixtures/users.csv"
             Flextures::Dumper::csv table: "users", dir:"hoge"
-            @result = IO.read Rails.root.to_path+"/spec/fixtures/hoge/users.csv"
+            @result = IO.read Rails.root.to_path+"/hoge/users.csv"
             expect( @base ).to eq @result
           end
           after do
-            FileUtils.rm Rails.root.to_path+"/spec/fixtures/hoge/users.csv"
+            FileUtils.rm Rails.root.to_path+"/hoge/users.csv"
+          end
+        end
+        context "「/」がある場合" do
+          it "指定したディレクトリに出ている" do
+            @base = IO.read Rails.root.to_path+"/spec/fixtures/users.csv"
+            Flextures::Dumper::csv table: "users", dir:"hoge/"
+            @result = IO.read Rails.root.to_path+"/hoge/users.csv"
+            expect( @base ).to eq @result
+          end
+          after do
+            FileUtils.rm Rails.root.to_path+"/hoge/users.csv"
+          end
+        end
+        context "ディレクトリ再帰生成" do
+          it "指定したディレクトリに出ている" do
+            @base = IO.read Rails.root.to_path+"/spec/fixtures/users.csv"
+            Flextures::Dumper::csv table: "users", dir:"hoge/hoge"
+            @result = IO.read Rails.root.to_path+"/hoge/hoge/users.csv"
+            expect( @base ).to eq @result
+          end
+          after do
+            FileUtils.rm Rails.root.to_path+"/hoge/hoge/users.csv"
+          end
+        end
+        context "ディレクトリ再帰生成" do
+          it "指定したディレクトリで「/」がある" do
+            @base = IO.read Rails.root.to_path+"/spec/fixtures/users.csv"
+            Flextures::Dumper::csv table: "users", dir:"hoge/hoge/"
+            @result = IO.read Rails.root.to_path+"/hoge/hoge/users.csv"
+            expect( @base ).to eq @result
+          end
+          after do
+            FileUtils.rm Rails.root.to_path+"/hoge/hoge/users.csv"
           end
         end
       end
