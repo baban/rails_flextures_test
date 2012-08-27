@@ -68,14 +68,20 @@ describe Flextures do
       end
       describe :decimal do
         context :yml do
+          it "integer" do
+            expect( Flextures::Dumper::TRANSLATER[:decimal].call( 10, :yml ) ).to eq 10
+          end
+          it "float" do
+            expect( Flextures::Dumper::TRANSLATER[:decimal].call( 1.5, :yml ) ).to eq 1.5
+          end
           it "null" do
-            Flextures::Dumper::TRANSLATER[:decimal].call( nil, :yml ).should === "null"
+            expect( Flextures::Dumper::TRANSLATER[:decimal].call( nil, :yml ) ).to eq "null"
           end
           it "0" do
-            Flextures::Dumper::TRANSLATER[:decimal].call( 0, :yml ).should === 0
+            expect( Flextures::Dumper::TRANSLATER[:decimal].call( 0, :yml ) ).to eq 0
           end
           it "false" do
-            Flextures::Dumper::TRANSLATER[:decimal].call( false, :yml ).should === 0
+            expect( Flextures::Dumper::TRANSLATER[:decimal].call( false, :yml ) ).to eq 0
           end
         end
         context :csv do
@@ -83,14 +89,20 @@ describe Flextures do
       end
       describe :float do
         context :yml do
+          it "integer" do
+            expect( Flextures::Dumper::TRANSLATER[:float].call( 10, :yml ) ).to eq 10
+          end
+          it "float" do
+            expect( Flextures::Dumper::TRANSLATER[:float].call( 1.5, :yml ) ).to eq 1.5
+          end
           it "null" do
-            Flextures::Dumper::TRANSLATER[:float].call( nil, :yml ).should === "null"
+            expect( Flextures::Dumper::TRANSLATER[:float].call( nil, :yml ) ).to eq "null"
           end
           it "0" do
-            Flextures::Dumper::TRANSLATER[:float].call( 0, :yml ).should === 0
+            expect( Flextures::Dumper::TRANSLATER[:float].call( 0, :yml ) ).to eq 0
           end
           it "false" do
-            Flextures::Dumper::TRANSLATER[:float].call( false, :yml ).should === 0
+            expect( Flextures::Dumper::TRANSLATER[:float].call( false, :yml ) ).to eq 0
           end
         end
         context :csv do
@@ -98,14 +110,20 @@ describe Flextures do
       end
       describe :integer do
         context :yml do
+          it "integer" do
+            expect( Flextures::Dumper::TRANSLATER[:integer].call( 10, :yml ) ).to eq 10
+          end
+          it "float" do
+            expect( Flextures::Dumper::TRANSLATER[:integer].call( 1.5, :yml ) ).to eq 1
+          end
           it "null" do
-            Flextures::Dumper::TRANSLATER[:integer].call( nil, :yml ).should === "null"
+            expect( Flextures::Dumper::TRANSLATER[:integer].call( nil, :yml ) ).to eq "null"
           end
           it "0" do
-            Flextures::Dumper::TRANSLATER[:integer].call( 0, :yml ).should === 0
+            expect( Flextures::Dumper::TRANSLATER[:integer].call( 0, :yml ) ).to eq 0
           end
           it "false" do
-            Flextures::Dumper::TRANSLATER[:integer].call( false, :yml ).should === 0
+            expect( Flextures::Dumper::TRANSLATER[:integer].call( false, :yml ) ).to eq 0
           end
         end
         context :csv do
@@ -114,13 +132,13 @@ describe Flextures do
       describe :string do
         context :yml do
           it "null" do
-            Flextures::Dumper::TRANSLATER[:string].call( nil, :yml ).should === "null"
+            expect( Flextures::Dumper::TRANSLATER[:string].call( nil, :yml ) ).to eq "null"
           end
           it "空文字" do
-            Flextures::Dumper::TRANSLATER[:string].call( "", :yml ).should === '""'
+            expect( Flextures::Dumper::TRANSLATER[:string].call( "", :yml ) ).to eq '""'
           end
           it "false" do
-            Flextures::Dumper::TRANSLATER[:string].call( false, :yml ).should === false
+            expect( Flextures::Dumper::TRANSLATER[:string].call( false, :yml ) ).to eq false
           end
         end
         context :csv do
