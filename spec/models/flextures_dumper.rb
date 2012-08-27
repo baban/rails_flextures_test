@@ -39,13 +39,13 @@ describe Flextures do
       describe :date do
         context :yml do
           it "null" do
-            Flextures::Dumper::TRANSLATER[:date].call( nil, :yml ).should === "null"
+            expect( Flextures::Dumper::TRANSLATER[:date].call( nil, :yml ) ).to eq "null"
           end
           it "空文字" do
-            Flextures::Dumper::TRANSLATER[:date].call( "", :yml ).should === "null"
+            expect( Flextures::Dumper::TRANSLATER[:date].call( "", :yml ) ).to eq "null"
           end
           it "false" do
-            Flextures::Dumper::TRANSLATER[:date].call( false, :yml ).should === "null"
+            expect( Flextures::Dumper::TRANSLATER[:date].call( false, :yml ) ).to eq "null"
           end
         end
         context :csv do
@@ -159,13 +159,13 @@ describe Flextures do
       describe :timestamp do
         context :yml do
           it "null" do
-            Flextures::Dumper::TRANSLATER[:time].call( nil, :yml ).should === "null"
+            expect( Flextures::Dumper::TRANSLATER[:time].call( nil, :yml ) ).to eq "null"
           end
           it "空文字" do
-            Flextures::Dumper::TRANSLATER[:time].call( "", :yml ).should === "null"
+            expect( Flextures::Dumper::TRANSLATER[:time].call( "", :yml ) ).to eq "null"
           end
           it "false" do
-            Flextures::Dumper::TRANSLATER[:time].call( false, :yml ).should === "null"
+            expect( Flextures::Dumper::TRANSLATER[:time].call( false, :yml ) ).to eq "null"
           end
         end
         context :csv do
@@ -174,7 +174,7 @@ describe Flextures do
     end
   end
 
-  describe "Dumper::" do
+  describe "Dumper" do
     before do
       `rm spec/fixtures/users.csv 2>/dev/null`
       `rm spec/fixtures/users.yml 2>/dev/null`
@@ -186,14 +186,15 @@ describe Flextures do
         `cp spec/fixtures_bkup/users_dump.csv spec/fixtures/users.csv`
       end
 
-      describe do
+      describe "正常系dumpテスト" do
         flextures :users
-
-        it "はデータをdumpする" do
-          @base = IO.read Rails.root.to_path<< "/spec/fixtures/users.csv"
-          Flextures::Dumper::csv table: "users"
-          @result = IO.read Rails.root.to_path<< "/spec/fixtures/users.csv"
-          @base.should == @result
+        context "正常系" do
+          it "データをdumpする" do
+            @base = IO.read Rails.root.to_path<< "/spec/fixtures/users.csv"
+            Flextures::Dumper::csv table: "users"
+            @result = IO.read Rails.root.to_path<< "/spec/fixtures/users.csv"
+            @base.should == @result
+          end
         end
       end
 
