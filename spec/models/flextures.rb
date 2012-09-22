@@ -50,7 +50,7 @@ describe Flextures do
 # flextures { cache: true }, :users
 # でテーブルの中身がキャッシュされている場合、再ロードは行わない
 #
-  context "ARGS::parse" do
+  describe "ARGS::parse" do
     before do
       # ENV.delete "TABLE"
       # ENV.delete "T"
@@ -108,18 +108,18 @@ describe Flextures do
       ENV["M"] = "User"
       ENV["FIXTURES"] = "user_another"
       format = Flextures::ARGS.parse
-      format.first[:table].should == "users"
-      format.first[:file].should == "user_another"
+      expect( format.first[:table] ).to eq "users"
+      expect( format.first[:file] ).to eq "user_another"
     end
 
     it " FIXTURES=でもダンプするディレクトリを変更できる " do
       ENV["FIXTURES"] = "users,items"
       format = Flextures::ARGS.parse
       format.size.should == 2
-      format.first[:table].should == "users"
-      format.first[:file].should == "users"
-      format[1][:table].should == "items"
-      format[1][:file].should == "items"
+      expect( format.first[:table] ).to eq "users"
+      expect( format.first[:file] ).to eq "users"
+      expect( format[1][:table] ).to eq "items"
+      expect( format[1][:file] ).to eq "items"
     end
 
     it " FIXTURES=でもダンプするファイルを変更できる " do
