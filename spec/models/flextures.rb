@@ -66,20 +66,8 @@ describe Flextures do
       format.size.should == ActiveRecord::Base.connection.tables.size - 1
     end
 
-    it " TABLE=テーブル名 を設定している場合 " do
-      ENV["TABLE"] = "users"
-      format = Flextures::ARGS.parse
-      format.first[:table].should == "users"
-    end
-
     it " MODEL=モデル名を設定している場合 " do
       ENV["MODEL"] = "User"
-      format = Flextures::ARGS.parse
-      format.first[:table].should == "users"
-    end
-
-    it " T=テーブル名を設定している場合 " do
-      ENV["T"] = "s_user"
       format = Flextures::ARGS.parse
       format.first[:table].should == "users"
     end
