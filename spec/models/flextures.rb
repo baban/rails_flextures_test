@@ -52,13 +52,13 @@ describe Flextures do
 #
   describe "ARGS::parse" do
     before do
-      # ENV.delete "TABLE"
-      # ENV.delete "T"
-      # ENV.delete "DIR"
-      # ENV.delete "D"
-      # ENV.delete "MODEL"
-      # ENV.delete "M"
-      # ENV.delete "FIXTURES"
+      ENV.delete "TABLE"
+      ENV.delete "T"
+      ENV.delete "DIR"
+      ENV.delete "D"
+      ENV.delete "MODEL"
+      ENV.delete "M"
+      ENV.delete "FIXTURES"
     end
 
     it " 指定がないときは全テーブル名前取得 " do
