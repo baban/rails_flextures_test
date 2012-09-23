@@ -70,12 +70,14 @@ describe Flextures do
       ENV["MODEL"] = "User"
       format = Flextures::ARGS.parse
       format.first[:table].should == "users"
+      ENV.delete("MODEL")
     end
 
     it " M=モデル名を設定している場合 " do
       ENV["M"] = "User"
       format = Flextures::ARGS.parse
       format.first[:table].should == "users"
+      ENV.delete("M")
     end
 
     it " DIR=でダンプするディレクトリを変更できる " do
@@ -83,6 +85,8 @@ describe Flextures do
       ENV["DIR"] = "test/fixtures/"
       format = Flextures::ARGS.parse
       format.first[:dir].should == "test/fixtures/"
+      ENV.delete("M")
+      ENV.delete("DIR")
     end
 
     it " D=でもダンプするディレクトリを変更できる " do
@@ -90,6 +94,8 @@ describe Flextures do
       ENV["D"] = "test/fixtures/"
       format = Flextures::ARGS.parse
       format.first[:dir].should == "test/fixtures/"
+      ENV.delete("M")
+      ENV.delete("D")
     end
 
     it " FIXTURES=でもダンプするファイルを変更できる " do
@@ -98,6 +104,8 @@ describe Flextures do
       format = Flextures::ARGS.parse
       expect( format.first[:table] ).to eq "users"
       expect( format.first[:file] ).to eq "user_another"
+      ENV.delete("M")
+      ENV.delete("FIXTURES")
     end
 
     it " FIXTURES=でもダンプするディレクトリを変更できる " do
@@ -108,6 +116,7 @@ describe Flextures do
       expect( format.first[:file] ).to eq "users"
       expect( format[1][:table] ).to eq "items"
       expect( format[1][:file] ).to eq "items"
+      ENV.delete("FIXTURES")
     end
 
     it " FIXTURES=でもダンプするファイルを変更できる " do
@@ -116,6 +125,8 @@ describe Flextures do
       format = Flextures::ARGS.parse
       format.first[:table].should == "users"
       format.first[:file].should == "user_another"
+      ENV.delete("M")
+      ENV.delete("FIXTURES")
     end
 
     it " FIXTURES=でもダンプするファイルを変更できる " do
@@ -125,6 +136,7 @@ describe Flextures do
       format.first[:file].should == "users"
       format[1][:table].should == "items"
       format[1][:file].should == "items"
+      ENV.delete("FIXTURES")
     end
 
     it "存在しているファイルはそのまま返す" do
