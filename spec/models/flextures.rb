@@ -47,9 +47,6 @@ describe Flextures do
 #
 # オプションでデータを厳密に読んで矛盾する列で エラーをraiseする
 #
-# flextures { cache: true }, :users
-# でテーブルの中身がキャッシュされている場合、再ロードは行わない
-#
   describe "ARGS::parse" do
     before do
       ENV.delete "TABLE"
@@ -105,17 +102,6 @@ describe Flextures do
       expect( format.first[:table] ).to eq "users"
       expect( format.first[:file] ).to eq "user_another"
       ENV.delete("M")
-      ENV.delete("FIXTURES")
-    end
-
-    it " FIXTURES=でもダンプするディレクトリを変更できる " do
-      ENV["FIXTURES"] = "users,items"
-      format = Flextures::ARGS.parse
-      format.size.should == 2
-      expect( format.first[:table] ).to eq "users"
-      expect( format.first[:file] ).to eq "users"
-      expect( format[1][:table] ).to eq "items"
-      expect( format[1][:file] ).to eq "items"
       ENV.delete("FIXTURES")
     end
 
