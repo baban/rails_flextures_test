@@ -200,17 +200,6 @@ describe Flextures do
 #        h[:foo].should == 15
       end
     end
-
-    describe "" do
-=begin
-      it "" do
-        klass = Class.new(ActiveRecord::Base){ |o| o.table_name= "guilds"}
-        klass.delete_all
-        Flextures::Loader::csv table: 'guilds'
-        klass.first.rank.should==2
-      end
-=end
-    end
   end
 end
 
