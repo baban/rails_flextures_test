@@ -211,6 +211,7 @@ describe Flextures do
             @base = IO.read Rails.root.to_path<< "/spec/fixtures/users.csv"
             Flextures::Dumper::csv table: "users"
             @result = IO.read Rails.root.to_path<< "/spec/fixtures/users.csv"
+
             expect( @base ).to eq @result
           end
         end
