@@ -3,12 +3,6 @@
 require 'spec_helper'
 
 describe Flextures do
-# item_controller でだけ特別なfixturesを読み込みたいときは
-#
-# test/fixtures/item/users.yml とコントローラー名で指定可能
-#
-# test/fixtures/item/buy/users.yml とするとアクション名と対応する
-#
 # flextures { controller:'item', action:'list' }, :users, :items
 # とすると
 # 1. test/fixtures/item/list/users.csv
