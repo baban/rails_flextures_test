@@ -43,7 +43,8 @@ GEM
     faker (1.0.1)
       i18n (~> 0.4)
     faker-japanese (0.0.1)
-    flextures (2.0.3)
+    flextures (2.0.5)
+      activerecord
     hike (1.2.1)
     i18n (0.6.0)
     journey (1.0.4)
@@ -140,7 +141,7 @@ DEPENDENCIES
   factory_girl_rails (= 3.5.0)
   faker (= 1.0.1)
   faker-japanese (= 0.0.1)
-  flextures (= 2.0.3)
+  flextures (= 2.0.5)
   jquery-rails
   mysql2 (= 0.3.11)
   plymouth
