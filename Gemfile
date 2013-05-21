@@ -12,6 +12,7 @@ gem 'faker-japanese', "0.0.1"
 gem "spork", "0.9.2"
 gem "factory_girl_rails", "3.5.0"
 gem "aspectr", "0.3.7"
+gem "shoulda", "3.1.1"
 
 group :development, :test do
   gem "pry"
@@ -22,15 +23,9 @@ group :development, :test do
   gem 'pry-nav'
   gem 'pry-remote'
   gem 'pry-stack_explorer'
-  #gem 'ruby-debug19'
-  #gem 'ruby-debug-base19x', '>= 0.11.30.pre10'
-  #gem 'linecache19', git: 'https://github.com/mark-moseley/linecache.git', ref: '869c6a65155068415925067e480741bd0a71527e'
 end
 
 group :assets do
-#  gem 'sass-rails',   '~> 3.2.3'
-#  gem 'coffee-rails', '~> 3.2.1'
-#  gem 'uglifier', '>= 1.0.3'
 end
 
 gem 'jquery-rails'
