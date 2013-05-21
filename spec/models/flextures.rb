@@ -14,10 +14,10 @@ describe Flextures do
 # で指定されたディレクトリのデータをロード
 # 階差ロード機能 diffload
 #
-# rake db:flextures:generate でロード＆ダンプ
-# rake db:flextures:dump M=User OPTIONS=silent,unfilter,csv,yml
-# rake db:flextures:dump MINUS=id,count でカラムを削除してダンプ
-# rake db:flextures:dump PLUS=id,count でカラムを追加してダンプ
+# * rake db:flextures:generate でロード＆ダンプ
+# * rake db:flextures:dump M=User OPTIONS=silent,unfilter
+# * rake db:flextures:dump MINUS=id,count でカラムを削除してダンプ
+# * rake db:flextures:dump PLUS=id,count でカラムを追加してダンプ
 # rake db:flextures:load ERROR=strict でエラーメッセージの表示レベルを指定
 #
 # FixtureサポートをShouldaで行えるようにしておく
@@ -40,7 +40,7 @@ describe Flextures do
 # Mock関数を作っておく
 #
 # オプションでデータを厳密に読んで矛盾する列で エラーをraiseする
-#
+
   describe "ARGS::parse" do
     before do
       ENV.delete "TABLE"
