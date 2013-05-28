@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.2'
 
+gem "activerecord"
+
 gem 'mysql2', '0.3.11'
 gem 'rspec', "2.11.0"
 gem "rspec-core", "2.11.0"

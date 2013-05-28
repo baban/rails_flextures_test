@@ -151,6 +151,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord
   aspectr (= 0.3.7)
   factory_girl_rails (= 3.5.0)
   faker (= 1.0.1)
