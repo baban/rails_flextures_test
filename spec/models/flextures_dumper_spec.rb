@@ -5,14 +5,11 @@ require "fileutils"
 
 describe Flextures do
   describe "Dumper" do
-    before do
-      `rm spec/fixtures/users.csv 2>/dev/null`
-      `rm spec/fixtures/users.yml 2>/dev/null`
-    end
-
     #  compare dumped data to original data
-    describe "csv " do
+    describe ".csv " do
       before do
+        `rm spec/fixtures/users.csv 2>/dev/null`
+        `rm spec/fixtures/users.yml 2>/dev/null`
         `cp spec/fixtures_bkup/users_dump.csv spec/fixtures/users.csv`
       end
 
@@ -112,10 +109,19 @@ describe Flextures do
         # TODO: 文字列型以外でのテスト
         # TODO: バイナリ型でのテスト
       end
+      after do
+        `rm spec/fixtures/users.csv 2>/dev/null`
+        `rm spec/fixtures/users.yml 2>/dev/null`
+        FileUtils.cp "spec/fixtures_bkup/users_dump.yml", "spec/fixtures/users.yml"
+      end
     end
 
     # compare data dumped yaml format
-    describe "yml " do
+    describe ".yml " do
+      before do
+        `rm spec/fixtures/users.csv 2>/dev/null`
+        `rm spec/fixtures/users.yml 2>/dev/null`
+      end
       describe "simple text" do
         before do
           FileUtils.cp "spec/fixtures_bkup/users_dump.yml", "spec/fixtures/users.yml"
@@ -208,9 +214,9 @@ describe Flextures do
         end
       end
 
-      context "特殊文字" do
+      context "include special character" do
         let(:user){ FactoryGirl.build(:user) }
-        context "括弧" do
+        context "'(' character" do
           before do
             @dump_method = ->{
               Flextures::Dumper::yml table: "users"
@@ -233,11 +239,47 @@ describe Flextures do
       # TODO: ランダム文字生成でのテスト
       # TODO: 文字列型以外でのテスト
       # TODO: バイナリ型でのテスト
+      after do
+        `rm spec/fixtures/users.csv 2>/dev/null`
+        `rm spec/fixtures/users.yml 2>/dev/null`
+        FileUtils.cp "spec/fixtures_bkup/users_dump.yml", "spec/fixtures/users.yml"
+      end
     end
-    after do
-      `rm spec/fixtures/users.csv 2>/dev/null`
-      `rm spec/fixtures/users.yml 2>/dev/null`
-      FileUtils.cp "spec/fixtures_bkup/users_dump.yml", "spec/fixtures/users.yml"
+
+    describe ".dump_attributes" do
+      context "option is empty" do
+        before do
+          @columns = Flextures::Dumper.dump_attributes User, {}
+        end
+        it "data is Array" do
+          @columns.should be_instance_of Array
+        end
+        it "array include Hash" do
+          @columns.first.should be_instance_of Hash
+        end
+        it "Hash 'name' key is all table colum names" do
+          @columns.map{ |h| h[:name] }.should == ["id", "name", "sex", "profile_comment", "level", "exp", "guild_id", "hp", "mp", "max_hp", "max_mp", "attack", "defence", "base_attack", "base_defence", "created_at", "updated_at"]
+        end
+        it "Hash 'type' key is all table colum type" do
+          @columns.map{ |h| h[:type] }.first.should == :integer
+        end
+      end
+      context "minus column option is setted" do
+        before do
+          @columns = Flextures::Dumper.dump_attributes User, { minus: ["id", "name", "sex", "profile_comment", "level", "exp", "guild_id", "hp"] }
+        end
+        it "Hash 'name' key is all table colum names" do
+          @columns.map{ |h| h[:name] }.should == ["mp", "max_hp", "max_mp", "attack", "defence", "base_attack", "base_defence", "created_at", "updated_at"]
+        end
+      end
+      context "plus column option is setted" do
+        before do
+          @columns = Flextures::Dumper.dump_attributes User, { plus: %W[hoge mage] }
+        end
+        it "Hash 'name' is added new column data" do
+          @columns.map{ |h| h[:name] }.include?("hoge").should be_true
+        end
+      end
     end
   end
 end

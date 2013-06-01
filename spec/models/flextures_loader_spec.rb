@@ -5,13 +5,13 @@ require 'spec_helper'
 describe Flextures do
   describe "Loader::" do
     describe "::file_exist " do
-      context "csvのみ" do
+      context "only csv files" do
         context "データをパースして必要な情報を返す" do
           before do
             @table_name, @file_name, @ext = Flextures::Loader::file_exist(table:'users', file:"onlycsv")
           end
 
-          it "データは３つ" do
+          it "data size is 3" do
             Flextures::Loader::file_exist(table:'users', file:"onlycsv").size.should==3
           end
 
@@ -28,17 +28,17 @@ describe Flextures do
           end
         end
       end
-      context "yamlのみのとき" do
+      context "only yaml files" do
         context "データをパースして必要な情報を返す" do
           before do
             @table_name, @file_name, @ext = Flextures::Loader::file_exist(table:'users', file:"onlyyaml")
           end
 
-          it "データは３つ" do
+          it "data size is 3" do
             Flextures::Loader::file_exist(table:'users', file:"onlyyml").size.should==3
           end
 
-          it "テーブル名" do
+          it "return table name" do
             @table_name.should=="users"
           end
 
@@ -51,17 +51,17 @@ describe Flextures do
           end
         end
       end
-      context "両方あるとき" do
+      context "exist coth files(yaml and csv)" do
         context "csv優先で探索して必要な情報を返す" do
           before do
             @table_name, @file_name, @ext = Flextures::Loader::file_exist(table:'users', file:"bothexist")
           end
 
-          it "データは３つ" do
+          it "size is 3" do
             Flextures::Loader::file_exist(table:'users', file:"bothexist").size.should==3
           end
 
-          it "テーブル名" do
+          it "return table name" do
             @table_name.should=="users"
           end
 
@@ -74,7 +74,7 @@ describe Flextures do
           end
         end
       end
-      context "両方存在しないとき" do
+      context "if yamlan csv files is esist" do
         context "データをパースして必要な情報を返す" do
           before do
             @table_name, @file_name, @ext = Flextures::Loader::file_exist(table:'users', file:"notexist")
