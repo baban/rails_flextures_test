@@ -14,10 +14,7 @@ describe Flextures do
 # で指定されたディレクトリのデータをロード
 # 階差ロード機能 diffload
 #
-# * rake db:flextures:generate でロード＆ダンプ
 # * rake db:flextures:dump M=User OPTIONS=silent,unfilter
-# * rake db:flextures:dump MINUS=id,count でカラムを削除してダンプ
-# * rake db:flextures:dump PLUS=id,count でカラムを追加してダンプ
 # rake db:flextures:load ERROR=strict でエラーメッセージの表示レベルを指定
 #
 # FixtureサポートをShouldaで行えるようにしておく
@@ -182,6 +179,37 @@ describe Flextures do
       after do
         ENV.delete "TABLE"
         ENV.delete "PLUS"
+      end
+    end
+    
+    context "when OPTIONS options is includeed" do
+      context "OPTIONS include 'silent' value" do
+        before do
+          ENV["TABLE"]="users"
+          ENV["OPTIONS"]="silent"
+          @format = Flextures::ARGS.parse
+        end
+        it "minus colum option is exist" do
+          @format.first[:silent].should be_true
+        end
+        after do
+          ENV.delete "TABLE"
+          ENV.delete "OPTIONS"
+        end
+      end
+      context "OPTIONS include 'unfilter' value" do
+        before do
+          ENV["TABLE"]="users"
+          ENV["OPTIONS"]="unfilter"
+          @format = Flextures::ARGS.parse
+        end
+        it "minus colum option is exist" do
+          @format.first[:unfilter].should be_true
+        end
+        after do
+          ENV.delete "TABLE"
+          ENV.delete "OPTIONS"
+        end
       end
     end
 
