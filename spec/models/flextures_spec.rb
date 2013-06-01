@@ -52,71 +52,137 @@ describe Flextures do
       ENV.delete "FIXTURES"
     end
 
-    it " 指定がないときは全テーブル名前取得 " do
-      format = Flextures::ARGS.parse
-      format.size.should == ActiveRecord::Base.connection.tables.size - 1
+    context "when option is empty" do
+      before do
+        @format = Flextures::ARGS.parse
+      end
+      it " get all table name data " do
+        @format.size.should == ActiveRecord::Base.connection.tables.size - 1
+      end
     end
 
-    it " MODEL=モデル名を設定している場合 " do
-      ENV["MODEL"] = "User"
-      format = Flextures::ARGS.parse
-      format.first[:table].should == "users"
-      ENV.delete("MODEL")
+    context "when MODEL option is exist" do
+      before do
+        ENV["MODEL"] = "User"
+        @format = Flextures::ARGS.parse
+      end
+      it "table information is equal model data" do
+        @format.first[:table].should == "users"
+      end
+      after do
+        ENV.delete("MODEL")
+      end
     end
 
-    it " M=モデル名を設定している場合 " do
-      ENV["M"] = "User"
-      format = Flextures::ARGS.parse
-      format.first[:table].should == "users"
-      ENV.delete("M")
+    context "when M option is exist" do
+      before do
+        ENV["M"] = "User"
+        @format = Flextures::ARGS.parse
+      end
+      it "table information is equal model data" do
+        @format.first[:table].should == "users"
+      end
+      after do
+        ENV.delete("M")
+      end
     end
 
-    it " DIR=でダンプするディレクトリを変更できる " do
-      ENV["M"] = "User"
-      ENV["DIR"] = "test/fixtures/"
-      format = Flextures::ARGS.parse
-      format.first[:dir].should == "test/fixtures/"
-      ENV.delete("M")
-      ENV.delete("DIR")
+    context "when DIR option is exist" do
+      before do
+        ENV["M"] = "User"
+        ENV["DIR"] = "test/fixtures/"
+        @format = Flextures::ARGS.parse
+      end
+      it "dump directrory information is changed" do
+        @format.first[:dir].should == "test/fixtures/"
+      end
+      after do
+        ENV.delete("M")
+        ENV.delete("DIR")
+      end
     end
 
-    it " D=でもダンプするディレクトリを変更できる " do
-      ENV["M"] = "User"
-      ENV["D"] = "test/fixtures/"
-      format = Flextures::ARGS.parse
-      format.first[:dir].should == "test/fixtures/"
-      ENV.delete("M")
-      ENV.delete("D")
+    context "when D option is exist" do
+      before do
+        ENV["M"] = "User"
+        ENV["D"] = "test/fixtures/"
+        @format = Flextures::ARGS.parse
+      end
+      it "dump directrory information is changed" do
+        @format.first[:dir].should == "test/fixtures/"
+      end
+      after do
+        ENV.delete("M")
+        ENV.delete("D")
+      end
     end
 
-    it " FIXTURES=でもダンプするファイルを変更できる " do
-      ENV["M"] = "User"
-      ENV["FIXTURES"] = "user_another"
-      format = Flextures::ARGS.parse
-      expect( format.first[:table] ).to eq "users"
-      expect( format.first[:file] ).to eq "user_another"
-      ENV.delete("M")
-      ENV.delete("FIXTURES")
+    context "when FIXTURES options is includeed" do
+      it " FIXTURES=でもダンプするファイルを変更できる " do
+        ENV["M"] = "User"
+        ENV["FIXTURES"] = "user_another"
+        format = Flextures::ARGS.parse
+        expect( format.first[:table] ).to eq "users"
+        expect( format.first[:file] ).to eq "user_another"
+        ENV.delete("M")
+        ENV.delete("FIXTURES")
+      end
+
+      it " FIXTURES=でもダンプするファイルを変更できる " do
+        ENV["M"] = "User"
+        ENV["FIXTURES"] = "user_another"
+        format = Flextures::ARGS.parse
+        format.first[:table].should == "users"
+        format.first[:file].should == "user_another"
+        ENV.delete("M")
+        ENV.delete("FIXTURES")
+      end
+
+      it " FIXTURES=でもダンプするファイルを変更できる " do
+        ENV["FIXTURES"] = "users,items"
+        format = Flextures::ARGS.parse
+        format.first[:table].should == "users"
+        format.first[:file].should == "users"
+        format[1][:table].should == "items"
+        format[1][:file].should == "items"
+        ENV.delete("FIXTURES")
+      end
     end
 
-    it " FIXTURES=でもダンプするファイルを変更できる " do
-      ENV["M"] = "User"
-      ENV["FIXTURES"] = "user_another"
-      format = Flextures::ARGS.parse
-      format.first[:table].should == "users"
-      format.first[:file].should == "user_another"
-      ENV.delete("M")
-      ENV.delete("FIXTURES")
+    context "when MINUS options is includeed" do
+      before do
+        ENV["TABLE"]="users"
+        ENV["MINUS"]="created_at"
+        @format = Flextures::ARGS.parse
+      end
+      it "minus colum option is exist" do
+        @format.first[:minus].should be_instance_of Array
+      end
+      it "minus colum option is exist" do
+        @format.first[:minus].should == ["created_at"]
+      end
+      after do
+        ENV.delete "TABLE"
+        ENV.delete "MINUS"
+      end
     end
 
-    it " FIXTURES=でもダンプするファイルを変更できる " do
-      ENV["FIXTURES"] = "users,items"
-      format = Flextures::ARGS.parse
-      format.first[:table].should == "users"
-      format.first[:file].should == "users"
-      format[1][:table].should == "items"
-      format[1][:file].should == "items"
-      ENV.delete("FIXTURES")
+    context "when PLUS options is includeed" do
+      before do
+        ENV["TABLE"]="users"
+        ENV["PLUS"]="hoge"
+        @format = Flextures::ARGS.parse
+      end
+      it "minus colum option is exist" do
+        @format.first[:plus].should be_instance_of Array
+      end
+      it "minus colum option is exist" do
+        @format.first[:plus].should == ["hoge"]
+      end
+      after do
+        ENV.delete "TABLE"
+        ENV.delete "PLUS"
+      end
     end
 
     it "存在しているファイルはそのまま返す" do
