@@ -8,92 +8,44 @@ describe Flextures do
       context "only csv files" do
         context "データをパースして必要な情報を返す" do
           before do
-            @table_name, @file_name, @ext = Flextures::Loader::file_exist(table:'users', file:"onlycsv")
-          end
-
-          it "data size is 3" do
-            Flextures::Loader::file_exist(table:'users', file:"onlycsv").size.should==3
-          end
-
-          it "テーブル名" do
-            @table_name.should=="users"
+            @file_name, @ext = Flextures::Loader::file_exist(table:'users', file:"onlycsv")
           end
 
           it "ロードするファイル名" do
-            @file_name.should=="spec/fixtures/onlycsv"
-          end
-
-          it "ファイルの拡張子" do
-            @ext.should== :csv
+            @file_name.should=="spec/fixtures/onlycsv.csv"
           end
         end
       end
       context "only yaml files" do
         context "データをパースして必要な情報を返す" do
           before do
-            @table_name, @file_name, @ext = Flextures::Loader::file_exist(table:'users', file:"onlyyaml")
-          end
-
-          it "data size is 3" do
-            Flextures::Loader::file_exist(table:'users', file:"onlyyml").size.should==3
-          end
-
-          it "return table name" do
-            @table_name.should=="users"
+            @file_name, @ext = Flextures::Loader::file_exist(table:'users', file:"onlyyaml")
           end
 
           it "ロードするファイル名" do
-            @file_name.should=="spec/fixtures/onlyyaml"
-          end
-
-          it "ファイルの拡張子" do
-            @ext.should== :yml
+            @file_name.should=="spec/fixtures/onlyyaml.yml"
           end
         end
       end
       context "exist coth files(yaml and csv)" do
         context "csv優先で探索して必要な情報を返す" do
           before do
-            @table_name, @file_name, @ext = Flextures::Loader::file_exist(table:'users', file:"bothexist")
-          end
-
-          it "size is 3" do
-            Flextures::Loader::file_exist(table:'users', file:"bothexist").size.should==3
-          end
-
-          it "return table name" do
-            @table_name.should=="users"
+            @file_name, @ext = Flextures::Loader::file_exist(table:'users', file:"bothexist")
           end
 
           it "ロードするファイル名" do
-            @file_name.should=="spec/fixtures/bothexist"
-          end
-
-          it "ファイルの拡張子" do
-            @ext.should== :csv
+            @file_name.should=="spec/fixtures/bothexist.csv"
           end
         end
       end
-      context "if yamlan csv files is esist" do
+      context "if yaml and csv files is exist" do
         context "データをパースして必要な情報を返す" do
           before do
-            @table_name, @file_name, @ext = Flextures::Loader::file_exist(table:'users', file:"notexist")
-          end
-
-          it "データは３つ" do
-            Flextures::Loader::file_exist(table:'users', file:"notexist").size.should==3
-          end
-
-          it "テーブル名" do
-            @table_name.should=="users"
+            @file_name, @ext = Flextures::Loader::file_exist(table:'users', file:"notexist")
           end
 
           it "ロードするファイル名" do
-            @file_name.should=="spec/fixtures/notexist"
-          end
-
-          it "ファイルの拡張子" do
-            @ext.should== nil
+            @file_name.should == "spec/fixtures/notexist.csv"
           end
         end
       end

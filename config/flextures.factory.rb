@@ -13,10 +13,7 @@ Flextures::Factory.define :upload_images do |f|
 end
 
 Flextures::Factory.define :admin_users do |f|
-  p :preferences
-  p f.preferences
   f.preferences = Base64.decode64(f.preferences)
-  p f.preferences
   f
 end
 

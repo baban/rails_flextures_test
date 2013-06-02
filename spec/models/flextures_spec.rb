@@ -211,6 +211,20 @@ describe Flextures do
           ENV.delete "OPTIONS"
         end
       end
+      context "OPTIONS include 'unfilter' value" do
+        before do
+          ENV["TABLE"]="users"
+          ENV["OPTIONS"]="strict"
+          @format = Flextures::ARGS.parse
+        end
+        it "minus colum option is exist" do
+          @format.first[:strict].should be_true
+        end
+        after do
+          ENV.delete "TABLE"
+          ENV.delete "OPTIONS"
+        end
+      end
     end
 
     it "存在しているファイルはそのまま返す" do
