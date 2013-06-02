@@ -6,47 +6,39 @@ describe Flextures do
   describe "Loader::" do
     describe "::file_exist " do
       context "only csv files" do
-        context "データをパースして必要な情報を返す" do
-          before do
-            @file_name, @ext = Flextures::Loader::file_exist(table:'users', file:"onlycsv")
-          end
+        before do
+          @file_name, @ext = Flextures::Loader::file_exist(table:'users', file:"onlycsv")
+        end
 
-          it "ロードするファイル名" do
-            @file_name.should=="spec/fixtures/onlycsv.csv"
-          end
+        it "return csv file name" do
+          @file_name.should=="spec/fixtures/onlycsv.csv"
         end
       end
       context "only yaml files" do
-        context "データをパースして必要な情報を返す" do
-          before do
-            @file_name, @ext = Flextures::Loader::file_exist(table:'users', file:"onlyyaml")
-          end
+        before do
+          @file_name, @ext = Flextures::Loader::file_exist(table:'users', file:"onlyyaml")
+        end
 
-          it "ロードするファイル名" do
-            @file_name.should=="spec/fixtures/onlyyaml.yml"
-          end
+        it "return yaml file name" do
+          @file_name.should=="spec/fixtures/onlyyaml.yml"
         end
       end
-      context "exist coth files(yaml and csv)" do
-        context "csv優先で探索して必要な情報を返す" do
-          before do
-            @file_name, @ext = Flextures::Loader::file_exist(table:'users', file:"bothexist")
-          end
+      context "exist both files(yaml and csv)" do
+        before do
+          @file_name, @ext = Flextures::Loader::file_exist(table:'users', file:"bothexist")
+        end
 
-          it "ロードするファイル名" do
-            @file_name.should=="spec/fixtures/bothexist.csv"
-          end
+        it "return csv file name" do
+          @file_name.should=="spec/fixtures/bothexist.csv"
         end
       end
-      context "if yaml and csv files is exist" do
-        context "データをパースして必要な情報を返す" do
-          before do
-            @file_name, @ext = Flextures::Loader::file_exist(table:'users', file:"notexist")
-          end
+      context "not exist both files (yaml and csv)" do
+        before do
+          @file_name, @ext = Flextures::Loader::file_exist(table:'users', file:"notexist")
+        end
 
-          it "ロードするファイル名" do
-            @file_name.should == "spec/fixtures/notexist.csv"
-          end
+        it "return 'nil' value" do
+          @file_name.should == nil
         end
       end
     end

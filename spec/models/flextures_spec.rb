@@ -197,6 +197,7 @@ describe Flextures do
           ENV.delete "OPTIONS"
         end
       end
+
       context "OPTIONS include 'unfilter' value" do
         before do
           ENV["TABLE"]="users"
@@ -211,7 +212,8 @@ describe Flextures do
           ENV.delete "OPTIONS"
         end
       end
-      context "OPTIONS include 'unfilter' value" do
+
+      context "OPTIONS include 'strict' value" do
         before do
           ENV["TABLE"]="users"
           ENV["OPTIONS"]="strict"

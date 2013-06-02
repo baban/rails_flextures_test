@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require "base64"
+
 Flextures::Factory.define :users do |f|
   f.items<< [ Item.new( master_item_id:1, count:5 ), Item.new( master_item_id:2, count:5 ) ]
   f
@@ -18,5 +20,5 @@ Flextures::Factory.define :admin_users do |f|
 end
 
 Flextures::DumpFilter.define :admin_users, {
-  preferences:->(v){ p(:preferences); Base64.encode64(v) }
+  preferences:->(v){ Base64.encode64(v) }
 }

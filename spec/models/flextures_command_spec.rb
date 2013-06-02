@@ -20,10 +20,10 @@ describe Flextures::Rake::Command do
         end
       end
       context "not setted TABLE option" do
-        it " all file is retuened " do
+        it " all file is returned " do
           filenames = Flextures::Rake::Command::dump
-          filenames.should ==  ["spec/fixtures/admin_users.csv", "spec/fixtures/guilds.csv", "spec/fixtures/items.csv",
-                                "spec/fixtures/s_user.csv", "spec/fixtures/upload_images.csv", "spec/fixtures/users.csv"]
+          filenames.should == ["spec/fixtures/admin_users.csv", "spec/fixtures/guilds.csv", "spec/fixtures/items.csv",
+                               "spec/fixtures/s_user.csv", "spec/fixtures/upload_images.csv", "spec/fixtures/users.csv"]
         end
       end
     end
