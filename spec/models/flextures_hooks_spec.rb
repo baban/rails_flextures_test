@@ -11,7 +11,7 @@ describe Flextures do
         `cp spec/fixtures_bkup/users.csv spec/fixtures/users.csv`
       end
 
-      context "通常動作" do
+      context "simple option" do
         flextures :users
 
         it "spec中でfixtureのロードを行う" do
@@ -82,41 +82,80 @@ describe Flextures do
             klass.count.should==4
           end
         end
+      end
 
-        context "ロード時にオプションを指定" do
-          context "空オプション" do
-            flextures( {}, :guilds )
-            it "正常にロードできる" do
-              klass = Guild
-              klass.count.should==4
-            end
+      context "option setting" do
+        context "empty option" do
+          flextures( {}, :guilds )
+          before do
+            @klass = Guild
           end
-          context "cacheオプション" do
-            context "trueのとき" do
-            end
-            context "falseのとき" do
-            end
+          it "data loaded" do
+            @klass.count.should==4
+          end
+        end
+        context "cache option" do
+          context "trueのとき" do
+          end
+          context "falseのとき" do
+          end
+        end
+        context "minus option" do
+          flextures( { minus:["created_at","updated_at"] }, :guilds )
+          before do
+            @klass = Guild
+          end
+          it "load normal data" do
+            @klass.count.should==4
+          end
+          it "minus value is deleted and set new value" do
+            @klass.first.created_at.to_date.should == Time.zone.now.to_date
+          end
+        end
+        context "unfilter option" do
+          before do
+            User.delete_all
+            Item.delete_all
+          end
+          flextures( { unfilter: true }, :users )
+          before do
+            @user = User.first
+          end
+          it "user don't have item" do
+            @user.items.size.should == 0
+          end
+        end
+        context "silent option" do
+          flextures( { silent: true }, :guilds )
+          it "not raise error" do
+            expect { Guild.count.should > 0 }.not_to raise_error
+          end
+        end
+        context "strict option" do
+          flextures( { strict: true }, :guilds )
+          it "not raise error" do
+            expect { Guild.count.should > 0 }.not_to raise_error
           end
         end
       end
     end
 
     describe "::flextures_delete" do
-      context "全テーブル指定削除" do
+      context "option is empty" do
         fixtures :items
         flextures_delete
-        it "きちんと消える" do
+        it "delete all table data" do
           Item.count.should==0
         end
       end
-      context "部分テーブル指定削除" do
-        context "itemsとguildsをLoad、itemsは消す" do
+      context "set table name option" do
+        context "items and guilds tables Load" do
           fixtures :items, :guilds
           flextures_delete :items
-          it "Itemは指定してある きちんと消える" do
+          it "items table deleted all data" do
             Item.count.should==0
           end
-          it "ギルドデータが 残っている" do
+          it "but guild table data is not deleted" do
             Guild.count.should > 0
           end
         end

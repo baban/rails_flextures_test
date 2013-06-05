@@ -3,40 +3,15 @@
 require 'spec_helper'
 
 describe Flextures do
-# flextures { controller:'item', action:'list' }, :users, :items
-# とすると
-# 1. test/fixtures/item/list/users.csv
-# 2. test/fixtures/item/users.csv
-# 3. test/fixtures/users.csv
-# の順番にファイルを探して、一番最初にあったcsvかyamlをロードす
-#
-# flextures { dir: "users" }, :users
-# で指定されたディレクトリのデータをロード
-# 階差ロード機能 diffload
-#
-# * rake db:flextures:dump M=User OPTIONS=silent,unfilter
-# rake db:flextures:load ERROR=strict でエラーメッセージの表示レベルを指定
-#
-# FixtureサポートをShouldaで行えるようにしておく
-#
-# Flexturs::ErrorLevel Fatal, Error, Warning, Info
-# 読み込む順番の大切さ
-# マスターデータからしか読み込めないことの情報を伝えておく
 # fixtures マスターデータ
 # flextures その他
 # の順番でのロード
 #
-# データのロード
-# fixturesのロード
-# flexturesの消去
-# flexturesのロード
-#
+# flextures_option
 # users.csv.erb 等の拡張子の場合、一度erbとして処理してから読み込みをする
 #
 # ActiveRecord::TestFixtures
 # Mock関数を作っておく
-#
-# オプションでデータを厳密に読んで矛盾する列で エラーをraiseする
 
   describe "ARGS::parse" do
     before do
@@ -228,19 +203,24 @@ describe Flextures do
         end
       end
     end
+  end
 
-    it "存在しているファイルはそのまま返す" do
-      files = ["users"]
-      files.select(&Flextures::ARGS.exist).should == files
+  describe "ARGS::exist" do
+    context "file is only one" do
+      it "" do
+        files = ["users"]
+        files.select(&Flextures::ARGS.exist).should == files
+      end
     end
 
-    it "存在しているファイルだけを絞り込んで返す" do
-      files = ["users", "fake_file"]
-      files.select(&Flextures::ARGS.exist).should == ["users"]
+    context "many file names" do
+      it "squueze exist files" do
+        files = ["users", "fake_file"]
+        files.select(&Flextures::ARGS.exist).should == ["users"]
+      end
     end
   end
 
-  # テーブルをモデル化出来ているかテスト
   describe ".create_model" do
     %W{users}.each do |table_name|
       it "(#{table_name})" do

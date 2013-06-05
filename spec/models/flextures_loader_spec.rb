@@ -13,6 +13,10 @@ describe Flextures do
         it "return csv file name" do
           @file_name.should=="spec/fixtures/onlycsv.csv"
         end
+
+        it "return csv format option" do
+          @ext.should==:csv
+        end
       end
       context "only yaml files" do
         before do
@@ -21,6 +25,10 @@ describe Flextures do
 
         it "return yaml file name" do
           @file_name.should=="spec/fixtures/onlyyaml.yml"
+        end
+
+        it "return yml format option" do
+          @ext.should==:yml
         end
       end
       context "exist both files(yaml and csv)" do
@@ -31,6 +39,10 @@ describe Flextures do
         it "return csv file name" do
           @file_name.should=="spec/fixtures/bothexist.csv"
         end
+
+        it "return yml format option" do
+          @ext.should==:csv
+        end
       end
       context "not exist both files (yaml and csv)" do
         before do
@@ -38,7 +50,38 @@ describe Flextures do
         end
 
         it "return 'nil' value" do
-          @file_name.should == nil
+          @file_name.should == "spec/fixtures/notexist.csv"
+        end
+
+        it "return nil format option" do
+          @ext.should== nil
+        end
+      end
+      context "set dir option" do
+        before do
+          @file_name, @ext = Flextures::Loader::file_exist(table:'users', dir:"hoge")
+        end
+
+        it "return under dir option directory file name" do
+          @file_name.should == "spec/fixtures/hoge/users.csv"
+        end
+
+        it "return 'nil' type" do
+          @ext.should == :csv
+        end
+      end
+
+      context " set stair option " do
+        before do
+          @file_name, @ext = Flextures::Loader::file_exist(table:'users', dir:"hoge/mage/fuga", stair: true)
+        end
+
+        it "return under dir option directory file name" do
+          @file_name.should == "spec/fixtures/hoge/users.csv"
+        end
+
+        it "return 'nil' type" do
+          @ext.should == :csv
         end
       end
     end
@@ -51,14 +94,16 @@ describe Flextures do
         `cp spec/fixtures_bkup/users_load.yml spec/fixtures/users.yml`
       end
 
-      before { User.delete_all }
+      before do
+        User.delete_all
+      end
 
-      it "はcsv優先でファイルをロードする" do
+      it "load file prefer to csv file" do
         Flextures::Loader::load table: "users"
         User.first.id.should == 1
       end
 
-      it "はfile: 'ファイル名' で指定した場合、そのファイルを取り出す" do
+      it "if 'file: filename' option is exist. load this file" do
         method = Flextures::Loader::load table: "users", file: "user_another2"
         User.first.name.should == 'ggg'
       end
@@ -104,7 +149,9 @@ describe Flextures do
         klass.first.id == 1
       end
 
-      after { User.delete_all }
+      after do
+        User.delete_all
+      end
     end
 
     describe "::yml" do
@@ -114,9 +161,11 @@ describe Flextures do
         `cp spec/fixtures_bkup/users_load.yml spec/fixtures/users.yml`
       end
 
-      before { User.delete_all }
+      before do
+        User.delete_all
+      end
 
-      it "" do
+      it "loda table size is 1" do
         Flextures::Loader::yml table: "users"
         User.first.id.should == 1
       end
