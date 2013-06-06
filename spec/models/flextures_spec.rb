@@ -12,7 +12,6 @@ describe Flextures do
 #
 # ActiveRecord::TestFixtures
 # Mock関数を作っておく
-
   describe "ARGS::parse" do
     before do
       ENV.delete "TABLE"

@@ -161,6 +161,18 @@ describe Flextures do
         end
       end
     end
+    describe "::flextures_options" do
+      flextures_set_options( cache: true )
+      it "don't stop" do
+        Flextures::Loader::flextures_options.should == { cache: true }
+      end
+      context "" do
+        flextures_set_options( unfilter: true )
+        it "don't stop" do
+          Flextures::Loader::flextures_options.should == { cache: true, unfilter: true }
+        end
+      end
+    end
   end
 end
 
