@@ -96,12 +96,28 @@ describe Flextures do
         end
         context "cache option" do
           context "when cahce mode is true " do
+            context "読み込むファイルが変わるとき"
             flextures( { cache: true }, :guilds )
             it "first time loading success" do
               Guild.first.should be_instance_of Guild
             end
+            it "cacheed file is correct" do
+              Flextures::Loader::flextures_curent_cache[:guilds].should == "spec/fixtures/guilds.csv"
+            end
             it "second time loading success" do
               Guild.first.should be_instance_of Guild
+            end
+          end
+          context "when cache file is changed" do
+            flextures( { cache: true }, :guilds )
+            it "cacheed file is correct" do
+              Flextures::Loader::flextures_curent_cache[:guilds].should == "spec/fixtures/guilds.csv"
+            end
+            context "after change" do
+              flextures( { cache: true }, guilds: "foo/guilds" )
+              it "cacheed file is correct" do
+                Flextures::Loader::flextures_curent_cache[:guilds].should == "spec/fixtures/foo/guilds.csv"
+              end
             end
           end
           context "when cahce mode is false " do
