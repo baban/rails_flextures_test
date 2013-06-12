@@ -3,15 +3,9 @@
 require 'spec_helper'
 
 describe Flextures do
-# fixtures マスターデータ
-# flextures その他
-# の順番でのロード
-#
-# flextures_option
-# users.csv.erb 等の拡張子の場合、一度erbとして処理してから読み込みをする
-#
-# ActiveRecord::TestFixtures
-# Mock関数を作っておく
+# Idea:
+# * Support minitest
+# * FactoryGirl support
   describe "ARGS::parse" do
     before do
       ENV.delete "TABLE"

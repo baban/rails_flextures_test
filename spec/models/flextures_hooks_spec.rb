@@ -95,9 +95,23 @@ describe Flextures do
           end
         end
         context "cache option" do
-          context "trueのとき" do
+          context "when cahce mode is true " do
+            flextures( { cache: true }, :guilds )
+            it "first time loading success" do
+              Guild.first.should be_instance_of Guild
+            end
+            it "second time loading success" do
+              Guild.first.should be_instance_of Guild
+            end
           end
-          context "falseのとき" do
+          context "when cahce mode is false " do
+            flextures( { cache: false }, :guilds )
+            it "first time loading success" do
+              Guild.first.should be_instance_of Guild
+            end
+            it "second time loading success" do
+              Guild.first.should be_instance_of Guild
+            end
           end
         end
         context "minus option" do
