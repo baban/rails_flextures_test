@@ -151,10 +151,10 @@ describe Flextures do
     end
     
     context "when OPTIONS options is includeed" do
-      context "OPTIONS include 'silent' value" do
+      context "OPTION include 'silent' value" do
         before do
           ENV["TABLE"]="users"
-          ENV["OPTIONS"]="silent"
+          ENV["OPTION"]="silent"
           @format = Flextures::ARGS.parse
         end
         it "minus colum option is exist" do
@@ -162,14 +162,14 @@ describe Flextures do
         end
         after do
           ENV.delete "TABLE"
-          ENV.delete "OPTIONS"
+          ENV.delete "OPTION"
         end
       end
 
-      context "OPTIONS include 'unfilter' value" do
+      context "OPTION include 'unfilter' value" do
         before do
           ENV["TABLE"]="users"
-          ENV["OPTIONS"]="unfilter"
+          ENV["OPTION"]="unfilter"
           @format = Flextures::ARGS.parse
         end
         it "minus colum option is exist" do
@@ -177,14 +177,14 @@ describe Flextures do
         end
         after do
           ENV.delete "TABLE"
-          ENV.delete "OPTIONS"
+          ENV.delete "OPTION"
         end
       end
 
-      context "OPTIONS include 'strict' value" do
+      context "OPTION include 'strict' value" do
         before do
           ENV["TABLE"]="users"
-          ENV["OPTIONS"]="strict"
+          ENV["OPTION"]="strict"
           @format = Flextures::ARGS.parse
         end
         it "minus colum option is exist" do
@@ -192,7 +192,7 @@ describe Flextures do
         end
         after do
           ENV.delete "TABLE"
-          ENV.delete "OPTIONS"
+          ENV.delete "OPTION"
         end
       end
     end

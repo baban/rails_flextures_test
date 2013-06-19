@@ -1,0 +1,83 @@
+チュートリアル
+
+また、Rspecなどのテスト・ツールからも呼び出す事ができます
+そのため快活環境と、テスト環境で同じデータでテストを行う事ができるようになっています
+
+実際にこれらの機能を触りながら体験して行きましょう
+
+まずは、何をおいてもユーザーを作成しないといけません
+
+Railsではユーザーのデータは users テーブルに格納するのが通例となっていますので
+ユーザーのデータを作成しましょう
+rake コマンド からflexturesを呼び出します
+
+rake db:flextues:dump TABLE=users
+
+こうすると spec/fixtures/ 以下に users.csv というファイルが作成されます
+中身を見てみましょう
+
+    id,name,sex,profile_comment,level,exp,guild_id,hp,mp,max_hp,max_mp,attack,defence,base_attack,base_defence,created_at,updated_at
+
+ユーザーが現在０人なので、テーブルのカラム名だけがダンプされています
+ここでExcelを開いて各々のユーザーのデータを打ち込んでいってもいいのですが、もう少しスマートな方法を取りましょう
+Flexturesでは、データを読み込むときに"フィルタ"という自分で読み込み機能をカスタマイズさせるためのプログラムを通過させます
+なので以下の様な仕様でフィルタを作成します
+
+* HP,MP,attack,defence などはみんな同じデフォルトの値を設定される
+* ユーザーは登録時に、アイテムを２個付与される
+* 名前と性別はランダムに勝手に作ってくれると
+
+    Flextures::Factory.define :users do |f|
+      f.items<< [ Item.new( master_item_id:1, count:5 ), Item.new( master_item_id:2, count:5 ) ]
+      f
+    end
+
+
+
+* 冒険者はゲーム開始の時点で、アイテムを２つもらっている
+
+    Flextures::Factory.define :users do |f|
+      f.items<< [ Item.new( master_item_id:1, count:5 ), Item.new( master_item_id:2, count:5 ) ]
+      f
+    end
+
+
+このフィルタを記述した状態で、次のコマンドを実行してみましょう
+
+rake db:flextures:load TABLE=users
+rake db:flextures:dump TABLE=users,items
+
+
+ギルドのフィルタを書き足す
+
+rake db:flextures:generate TABLE=users,guilds
+
+Rspecでの読み込み
+
+ファイル別の置き場所のルール
+
+
+## 階差ロード機能とディレクトリの振り分け
+
+ディレクトリの切り分けと最後に階差ロード機能について説明させていただきましょう
+
+
+ある日、本番環境で
+実際には本番環境のデータは可動が始まると膨大な量のデータになっているので
+今後も何度も繰り返しテストを行う事を考えると
+バグの発生する原因のデータのみを抜き取って、ユニットテストのためのfixtureに移動をさせるのが良いでしょう
+
+同じように、Rspecのfixture関数は spec/fixtures/ 以下のYAMLファイル一つしか受け付けなかったため、
+ここにテストに必要な全てのデータを用意する必要がありました
+そのため、テストケースが増えてくると、すべてのテストに整合性のあるデータを用意することが難しくなって
+テストケースの規模を増やせない事情がありましたがこれも解決出来ます
+
+また、
+
+依存関係を太らせるわけには行きません
+そのため
+
+階差ロード機能の解説
+
+productionのデータの切り分け
+
