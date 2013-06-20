@@ -216,7 +216,7 @@ describe Flextures do
 
       context "include special character" do
         let(:user){ FactoryGirl.build(:user) }
-        context "'(' character" do
+        context "special character" do
           before do
             @dump_method = ->{
               Flextures::Dumper::yml table: "users"
