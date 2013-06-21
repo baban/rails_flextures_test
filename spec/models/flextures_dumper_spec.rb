@@ -26,24 +26,23 @@ describe Flextures do
         flextures :users
         context "set directory option" do
           it "file is dumped changed directory" do
-            @base = IO.read File.join( Rails.root.to_path, "/spec/fixtures/users.csv" )
-            Flextures::Dumper::csv table: "users", dir:"hoge"
-            @result = IO.read File.join( Rails.root.to_path, "/hoge/users.csv" )
+            from = File.join( Rails.root.to_path, "spec/fixtures/users.csv" )
+            to   = File.join( Rails.root.to_path, "spec/fixtures/hoge/hoge/users.csv" )
+            @base = IO.read from
+            Flextures::Dumper::csv table: "users", dir:"hoge/hoge"
+            @result = IO.read to
             @base.should == @result
           end
           after do
-            FileUtils.rm File.join( Rails.root.to_path, "/hoge/users.csv" )
+            FileUtils.rm File.join( Rails.root.to_path, "spec/fixtures/hoge/hoge/users.csv" )
           end
         end
         context "directory name is include '/' mark" do
           it "file is dumped changed directory" do
             @base = IO.read File.join( Rails.root.to_path, "/spec/fixtures/users.csv" )
             Flextures::Dumper::csv table: "users", dir:"hoge/"
-            @result = IO.read File.join( Rails.root.to_path, "/hoge/users.csv" )
+            @result = IO.read File.join( Rails.root.to_path, "spec/fixtures/hoge/users.csv" )
             @base.should == @result
-          end
-          after do
-            FileUtils.rm File.join( Rails.root.to_path, "/hoge/users.csv" )
           end
         end
         context "make dump directory" do
@@ -51,22 +50,23 @@ describe Flextures do
             it "create directroy" do
               @base = IO.read File.join( Rails.root.to_path, "/spec/fixtures/users.csv" )
               Flextures::Dumper::csv table: "users", dir:"hoge/hoge"
-              @result = IO.read File.join( Rails.root.to_path, "/hoge/hoge/users.csv" )
+              @result = IO.read File.join( Rails.root.to_path, "spec/fixtures/hoge/hoge/users.csv" )
               @base.should == @result
+            end
+            after do
+              FileUtils.rm File.join( Rails.root.to_path, "spec/fixtures/hoge/hoge/users.csv" )
             end
           end
           context "directory option include '/' mark " do
             it "create directory" do
-              @base = IO.read File.join( Rails.root.to_path, "/spec/fixtures/users.csv" )
-              Flextures::Dumper::csv table: "users", dir:"hoge/hoge/"
-              @result = IO.read File.join( Rails.root.to_path, "/hoge/hoge/users.csv" )
+              @base = IO.read File.join( Rails.root.to_path, "spec/fixtures/users.csv" )
+              Flextures::Dumper::csv table: "users", dir:"hoge/hoge"
+              @result = IO.read File.join( Rails.root.to_path, "spec/fixtures/hoge/hoge/users.csv" )
               @base.should == @result
             end
-          end
-
-          after do
-            FileUtils.rm File.join( Rails.root.to_path, "/hoge/hoge/users.csv" )
-            FileUtils.rmdir File.join( Rails.root.to_path, "/hoge/hoge/" )
+            after do
+              FileUtils.rm File.join( Rails.root.to_path, "spec/fixtures/hoge/hoge/users.csv" )
+            end
           end
         end
       end
