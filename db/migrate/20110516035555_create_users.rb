@@ -1,7 +1,7 @@
 
 
 class CreateUsers < ActiveRecord::Migration
-  def self.create
+  def self.up
     create_table :users do |t|
       t.string   :name,           default: "", null: false
       t.integer  :sex,            default: 0,  null: false
@@ -20,5 +20,8 @@ class CreateUsers < ActiveRecord::Migration
       t.timestamps
     end
   end
-end
 
+  def self.down
+    drop_table :users
+  end
+end
