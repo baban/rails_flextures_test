@@ -15,6 +15,7 @@ describe Flextures do
 
       context "simple dump test" do
         flextures :users
+
         it "dump" do
           @base = IO.read File.join( Rails.root.to_path, "/spec/fixtures/users.csv" )
           Flextures::Dumper::csv table: "users"
@@ -22,6 +23,7 @@ describe Flextures do
           @base.should == @result
         end
       end
+
       context "chamge dump derectory" do
         flextures :users
         context "set directory option" do
@@ -75,7 +77,7 @@ describe Flextures do
           before do
             User.create( name:"hoge", sex: 0, level: 1, exp: 0, guild_id: 0, hp: 10, mp: 0 )
           end
-        
+
           it "outpu null" do
             Flextures::Dumper::csv table: "users"
             path = File.join( Rails.root.to_path, "/spec/fixtures/users.csv" )
@@ -86,14 +88,14 @@ describe Flextures do
             end
           end
         end
-        
+
         describe "empty string" do
           before do
             user = FactoryGirl.build(:user)
             user.profile_comment=""
             user.save
           end
-          
+
           it "dump null" do
             Flextures::Dumper::csv table: "users"
             path = File.join( Rails.root.to_path, "/spec/fixtures/users.csv" )
@@ -200,7 +202,7 @@ describe Flextures do
             FileUtils.cp "spec/fixtures_bkup/users_dump_tab.csv", "spec/fixtures/users.csv"
           end
           flextures :users
-          
+
           it "YAMLは読み込み可能" do
             Flextures::Dumper::yml table: "users"
             expect { YAML.load_file( Rails.root.to_path+"/spec/fixtures/users.yml" ) }.not_to raise_error
@@ -283,4 +285,3 @@ describe Flextures do
     end
   end
 end
-
