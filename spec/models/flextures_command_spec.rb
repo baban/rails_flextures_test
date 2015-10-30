@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 require 'spec_helper'
 require "fileutils"
 
@@ -65,7 +63,7 @@ describe Flextures::Rake::Command do
         it " all file is retuened " do
           ENV["FORMAT"] = "yml"
           filenames = Flextures::Rake::Command::dump
-          filenames.should == ["spec/fixtures/admin_users.yml", "spec/fixtures/guilds.yml", "spec/fixtures/items.yml", 
+          filenames.should == ["spec/fixtures/admin_users.yml", "spec/fixtures/guilds.yml", "spec/fixtures/items.yml",
                                "spec/fixtures/s_user.yml", "spec/fixtures/upload_images.yml", "spec/fixtures/users.yml"]
           ENV.delete "FORMAT"
         end
@@ -140,4 +138,3 @@ describe Flextures::Rake::Command do
     end
   end
 end
-
