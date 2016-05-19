@@ -22,6 +22,8 @@ GEM
       activesupport (= 3.2.2)
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
+    activerecord-import (0.13.0)
+      activerecord (>= 3.0)
     activerecord-mysql2-adapter (0.0.3)
       mysql2
     activeresource (3.2.2)
@@ -46,7 +48,10 @@ GEM
     faker (1.0.1)
       i18n (~> 0.4)
     faker-japanese (0.0.1)
-    flextures (4.0.0)
+    flextures (4.1.0)
+      activerecord
+      activerecord-import
+      activesupport
     hike (1.2.3)
     i18n (0.7.0)
     journey (1.0.4)
@@ -149,7 +154,7 @@ DEPENDENCIES
   factory_girl_rails
   faker
   faker-japanese
-  flextures (= 4.0.0)
+  flextures (= 4.1.0)
   jquery-rails
   minitest
   mysql2
@@ -169,4 +174,4 @@ DEPENDENCIES
   test-unit
 
 BUNDLED WITH
-   1.10.6
+   1.11.2

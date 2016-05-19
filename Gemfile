@@ -10,8 +10,7 @@ gem 'mysql2'
 gem 'rspec', "2.11.0"
 gem "rspec-core", "2.11.0"
 gem 'rspec-rails', "2.11.0"
-#gem 'flextures', "3.1.3" 
-gem 'flextures', "4.0.0" 
+gem 'flextures', "4.1.0" 
 gem 'faker'
 gem 'faker-japanese'
 gem "spork"
