@@ -1,16 +1,15 @@
 source 'https://rubygems.org'
 
 
-gem 'rails', '3.2.2'
+gem 'rails', "4.2.0"
 
 gem "activerecord"
 
-gem "activerecord-mysql2-adapter"
-gem 'mysql2'
-gem 'rspec', "2.11.0"
-gem "rspec-core", "2.11.0"
-gem 'rspec-rails', "2.11.0"
-gem 'flextures', "4.1.0" 
+gem 'mysql2', '0.3.21'
+gem 'rspec'
+gem "rspec-core"
+gem 'rspec-rails'
+gem 'flextures', "4.1.0"
 gem 'faker'
 gem 'faker-japanese'
 gem "spork"
@@ -28,8 +27,3 @@ group :development, :test do
   gem 'pry-remote'
   gem 'pry-stack_explorer'
 end
-
-group :assets do
-end
-
-gem 'jquery-rails'

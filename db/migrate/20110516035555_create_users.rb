@@ -5,7 +5,7 @@ class CreateUsers < ActiveRecord::Migration
     create_table :users do |t|
       t.string   :name,           default: "", null: false
       t.integer  :sex,            default: 0,  null: false
-      t.text     :profile_comment,default: ""
+      t.text     :profile_comment,null: true
       t.integer  :level,          default: 1,  null: false
       t.integer  :exp,            default: 0,  null: false
       t.integer  :guild_id,       default: 0,  null: false

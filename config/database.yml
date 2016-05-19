@@ -2,12 +2,12 @@ development:
   adapter: mysql2 
   database: rails_flextures_dev
   username: root
-  password: root
+  password: svc2027
   host: localhost
 
 test:
   adapter: mysql2
   database: rails_flextures_test
   username: root
-  password: root
+  password: svc2027
   host: localhost

@@ -7,7 +7,7 @@ describe Flextures do
     describe "::file_exist " do
       context "only csv files" do
         before do
-          @file_name, @ext = Flextures::Loader::file_exist(table:'users', file:"onlycsv")
+          @file_name, @ext, @erb = Flextures::Loader::file_exist(table:'users', file:"onlycsv")
         end
 
         it "return csv file name" do
@@ -18,9 +18,10 @@ describe Flextures do
           @ext.should==:csv
         end
       end
+
       context "only yaml files" do
         before do
-          @file_name, @ext = Flextures::Loader::file_exist(table:'users', file:"onlyyaml")
+          @file_name, @ext, @erb = Flextures::Loader::file_exist(table:'users', file:"onlyyaml")
         end
 
         it "return yaml file name" do
@@ -31,9 +32,10 @@ describe Flextures do
           @ext.should==:yml
         end
       end
+
       context "exist both files(yaml and csv)" do
         before do
-          @file_name, @ext = Flextures::Loader::file_exist(table:'users', file:"bothexist")
+          @file_name, @ext, @erb = Flextures::Loader::file_exist(table:'users', file:"bothexist")
         end
 
         it "return csv file name" do
@@ -44,9 +46,10 @@ describe Flextures do
           @ext.should==:csv
         end
       end
+
       context "not exist both files (yaml and csv)" do
         before do
-          @file_name, @ext = Flextures::Loader::file_exist(table:'users', file:"notexist")
+          @file_name, @ext, @erb = Flextures::Loader::file_exist(table:'users', file:"notexist")
         end
 
         it "return 'nil' value" do
@@ -60,7 +63,7 @@ describe Flextures do
 
       context "set dir option" do
         before do
-          @file_name, @ext = Flextures::Loader::file_exist(table:'users', dir:"hoge")
+          @file_name, @ext, @erb = Flextures::Loader::file_exist(table:'users', dir:"hoge")
         end
 
         it "return under dir option directory file name" do
@@ -74,7 +77,7 @@ describe Flextures do
 
       context " set stair option " do
         before do
-          @file_name, @ext = Flextures::Loader::file_exist(table:'users', dir:"hoge/mage/fuga", stair: true)
+          @file_name, @ext, @erb = Flextures::Loader::file_exist(table:'users', dir:"hoge/mage/fuga", stair: true)
         end
 
         it "return under dir option directory file name" do
@@ -179,4 +182,3 @@ describe Flextures do
     end
   end
 end
-
