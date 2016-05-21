@@ -70,6 +70,7 @@ describe Flextures do
           end
         end
       end
+
       context "special character test" do
         describe :null do
           before do
@@ -109,6 +110,7 @@ describe Flextures do
         # TODO: 文字列型以外でのテスト
         # TODO: バイナリ型でのテスト
       end
+
       after do
         `rm spec/fixtures/users.csv 2>/dev/null`
         `rm spec/fixtures/users.yml 2>/dev/null`
@@ -277,7 +279,7 @@ describe Flextures do
           @columns = Flextures::Dumper.dump_attributes User, { plus: %W[hoge mage] }
         end
         it "Hash 'name' is added new column data" do
-          @columns.map{ |h| h[:name] }.include?("hoge").should be_true
+          @columns.map{ |h| h[:name] }.include?("hoge").should be true
         end
       end
     end

@@ -51,17 +51,31 @@ describe Flextures do
         end
 
         it "return 'nil' value" do
-          @file_name.should == "spec/fixtures/notexist.csv"
+          @file_name.should be nil
         end
 
         it "return nil format option" do
-          @ext.should== nil
+          @ext.should be nil
+        end
+      end
+
+      context "exist erb.csv file" do
+        before do
+          @file_name, *@ext = Flextures::Loader::file_exist(table:'users', file:"users_erb")
+        end
+
+        it "return 'nil' value" do
+          @file_name.should == "spec/fixtures/users_erb.erb.csv"
+        end
+
+        it "return nil format option" do
+          @ext.should == [:erb, :csv]
         end
       end
 
       context "set dir option" do
         before do
-          @file_name, @ext, @erb = Flextures::Loader::file_exist(table:'users', dir:"hoge")
+          @file_name, *@ext = Flextures::Loader::file_exist(table:'users', dir:"hoge")
         end
 
         it "return under dir option directory file name" do
@@ -69,7 +83,7 @@ describe Flextures do
         end
 
         it "return 'nil' type" do
-          @ext.should == :csv
+          @ext.should == [:csv]
         end
       end
 

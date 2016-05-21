@@ -5,192 +5,128 @@ describe Flextures do
 # * Support minitest
 # * FactoryGirl support
   describe "ARGS::parse" do
-    before do
-      ENV.delete "TABLE"
-      ENV.delete "T"
-      ENV.delete "DIR"
-      ENV.delete "D"
-      ENV.delete "MODEL"
-      ENV.delete "M"
-      ENV.delete "FIXTURES"
-    end
-
     context "when option is empty" do
       before do
-        @format = Flextures::ARGS.parse(ENV)
+        @format = Flextures::ARGS.parse({})
       end
+
       it " get all table name data " do
         @format.size.should == ActiveRecord::Base.connection.tables.size - 1
       end
     end
 
     context "when MODEL option is exist" do
-      before do
-        ENV["MODEL"] = "User"
-        @format = Flextures::ARGS.parse(ENV)
+      subject do
+        Flextures::ARGS.parse("MODEL" => "User")
       end
+
       it "table information is equal model data" do
-        @format.first[:table].should == "users"
-      end
-      after do
-        ENV.delete("MODEL")
+        subject.first[:table].should == "users"
       end
     end
 
     context "when M option is exist" do
       before do
-        ENV["M"] = "User"
-        @format = Flextures::ARGS.parse(ENV)
+        @format = Flextures::ARGS.parse("M" => "User")
       end
+
       it "table information is equal model data" do
         @format.first[:table].should == "users"
-      end
-      after do
-        ENV.delete("M")
       end
     end
 
     context "when DIR option is exist" do
       before do
-        ENV["M"] = "User"
-        ENV["DIR"] = "test/fixtures/"
-        @format = Flextures::ARGS.parse(ENV)
+        @format = Flextures::ARGS.parse("M"=>"User", "DIR"=>"test/fixtures/")
       end
+
       it "dump directrory information is changed" do
         @format.first[:dir].should == "test/fixtures/"
-      end
-      after do
-        ENV.delete("M")
-        ENV.delete("DIR")
       end
     end
 
     context "when D option is exist" do
       before do
-        ENV["M"] = "User"
-        ENV["D"] = "test/fixtures/"
-        @format = Flextures::ARGS.parse(ENV)
+        @format = Flextures::ARGS.parse("M"=>"User", "D"=>"test/fixtures/")
       end
+
       it "dump directrory information is changed" do
         @format.first[:dir].should == "test/fixtures/"
-      end
-      after do
-        ENV.delete("M")
-        ENV.delete("D")
       end
     end
 
     context "when FIXTURES options is includeed" do
       it " FIXTURES=でもダンプするファイルを変更できる " do
-        ENV["M"] = "User"
-        ENV["FIXTURES"] = "user_another"
-        format = Flextures::ARGS.parse(ENV)
-        expect( format.first[:table] ).to eq "users"
-        expect( format.first[:file] ).to eq "user_another"
-        ENV.delete("M")
-        ENV.delete("FIXTURES")
+        format = Flextures::ARGS.parse("M"=>"User", "FIXTURES"=>"user_another")
+        expect(format.first[:table]).to eq "users"
+        expect(format.first[:file]).to eq "user_another"
       end
 
       it " FIXTURES=でもダンプするファイルを変更できる " do
-        ENV["M"] = "User"
-        ENV["FIXTURES"] = "user_another"
-        format = Flextures::ARGS.parse(ENV)
-        format.first[:table].should == "users"
-        format.first[:file].should == "user_another"
-        ENV.delete("M")
-        ENV.delete("FIXTURES")
-      end
-
-      it " FIXTURES=でもダンプするファイルを変更できる " do
-        ENV["FIXTURES"] = "users,items"
-        format = Flextures::ARGS.parse(ENV)
-        format.first[:table].should == "users"
-        format.first[:file].should == "users"
+        format = Flextures::ARGS.parse("FIXTURES" => "users,items")
+        format[0][:table].should == "users"
+        format[0][:file].should == "users"
         format[1][:table].should == "items"
         format[1][:file].should == "items"
-        ENV.delete("FIXTURES")
       end
     end
 
     context "when MINUS options is includeed" do
       before do
-        ENV["TABLE"]="users"
-        ENV["MINUS"]="created_at"
-        @format = Flextures::ARGS.parse(ENV)
+        @format = Flextures::ARGS.parse("TABLE"=>"users", "MINUS"=>"created_at")
       end
+
       it "minus colum option is exist" do
         @format.first[:minus].should be_instance_of Array
       end
+
       it "minus colum option is exist" do
         @format.first[:minus].should == ["created_at"]
-      end
-      after do
-        ENV.delete "TABLE"
-        ENV.delete "MINUS"
       end
     end
 
     context "when PLUS options is includeed" do
       before do
-        ENV["TABLE"]="users"
-        ENV["PLUS"]="hoge"
-        @format = Flextures::ARGS.parse(ENV)
+        @format = Flextures::ARGS.parse("TABLE"=>"users", "PLUS"=>"hoge")
       end
+
       it "minus colum option is exist" do
         @format.first[:plus].should be_instance_of Array
       end
+
       it "minus colum option is exist" do
         @format.first[:plus].should == ["hoge"]
-      end
-      after do
-        ENV.delete "TABLE"
-        ENV.delete "PLUS"
       end
     end
 
     context "when OPTIONS options is includeed" do
       context "OPTION include 'silent' value" do
         before do
-          ENV["TABLE"]="users"
-          ENV["OPTION"]="silent"
-          @format = Flextures::ARGS.parse(ENV)
+          @format = Flextures::ARGS.parse("TABLE"=>"users", "OPTION"=>"silent")
         end
+
         it "minus colum option is exist" do
-          @format.first[:silent].should be_true
-        end
-        after do
-          ENV.delete "TABLE"
-          ENV.delete "OPTION"
+          @format.first[:silent].should be true
         end
       end
 
       context "OPTION include 'unfilter' value" do
         before do
-          ENV["TABLE"]="users"
-          ENV["OPTION"]="unfilter"
-          @format = Flextures::ARGS.parse(ENV)
+          @format = Flextures::ARGS.parse("TABLE"=>"users", "OPTION"=>"unfilter")
         end
+
         it "minus colum option is exist" do
-          @format.first[:unfilter].should be_true
-        end
-        after do
-          ENV.delete "TABLE"
-          ENV.delete "OPTION"
+          @format.first[:unfilter].should be true
         end
       end
 
       context "OPTION include 'strict' value" do
         before do
-          ENV["TABLE"]="users"
-          ENV["OPTION"]="strict"
-          @format = Flextures::ARGS.parse(ENV)
+          @format = Flextures::ARGS.parse("TABLE"=>"users", "OPTION"=>"strict")
         end
+
         it "minus colum option is exist" do
-          @format.first[:strict].should be_true
-        end
-        after do
-          ENV.delete "TABLE"
-          ENV.delete "OPTION"
+          @format.first[:strict].should be true
         end
       end
     end
@@ -198,7 +134,7 @@ describe Flextures do
 
   describe "ARGS::exist" do
     context "file is only one" do
-      it "" do
+      it "file is exist" do
         files = ["users"]
         files.select(&Flextures::ARGS.exist).should == files
       end
