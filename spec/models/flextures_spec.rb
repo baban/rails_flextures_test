@@ -17,7 +17,7 @@ describe Flextures do
 
     context "when option is empty" do
       before do
-        @format = Flextures::ARGS.parse
+        @format = Flextures::ARGS.parse(ENV)
       end
       it " get all table name data " do
         @format.size.should == ActiveRecord::Base.connection.tables.size - 1
@@ -27,7 +27,7 @@ describe Flextures do
     context "when MODEL option is exist" do
       before do
         ENV["MODEL"] = "User"
-        @format = Flextures::ARGS.parse
+        @format = Flextures::ARGS.parse(ENV)
       end
       it "table information is equal model data" do
         @format.first[:table].should == "users"
@@ -40,7 +40,7 @@ describe Flextures do
     context "when M option is exist" do
       before do
         ENV["M"] = "User"
-        @format = Flextures::ARGS.parse
+        @format = Flextures::ARGS.parse(ENV)
       end
       it "table information is equal model data" do
         @format.first[:table].should == "users"
@@ -54,7 +54,7 @@ describe Flextures do
       before do
         ENV["M"] = "User"
         ENV["DIR"] = "test/fixtures/"
-        @format = Flextures::ARGS.parse
+        @format = Flextures::ARGS.parse(ENV)
       end
       it "dump directrory information is changed" do
         @format.first[:dir].should == "test/fixtures/"
@@ -69,7 +69,7 @@ describe Flextures do
       before do
         ENV["M"] = "User"
         ENV["D"] = "test/fixtures/"
-        @format = Flextures::ARGS.parse
+        @format = Flextures::ARGS.parse(ENV)
       end
       it "dump directrory information is changed" do
         @format.first[:dir].should == "test/fixtures/"
@@ -84,7 +84,7 @@ describe Flextures do
       it " FIXTURES=でもダンプするファイルを変更できる " do
         ENV["M"] = "User"
         ENV["FIXTURES"] = "user_another"
-        format = Flextures::ARGS.parse
+        format = Flextures::ARGS.parse(ENV)
         expect( format.first[:table] ).to eq "users"
         expect( format.first[:file] ).to eq "user_another"
         ENV.delete("M")
@@ -94,7 +94,7 @@ describe Flextures do
       it " FIXTURES=でもダンプするファイルを変更できる " do
         ENV["M"] = "User"
         ENV["FIXTURES"] = "user_another"
-        format = Flextures::ARGS.parse
+        format = Flextures::ARGS.parse(ENV)
         format.first[:table].should == "users"
         format.first[:file].should == "user_another"
         ENV.delete("M")
@@ -103,7 +103,7 @@ describe Flextures do
 
       it " FIXTURES=でもダンプするファイルを変更できる " do
         ENV["FIXTURES"] = "users,items"
-        format = Flextures::ARGS.parse
+        format = Flextures::ARGS.parse(ENV)
         format.first[:table].should == "users"
         format.first[:file].should == "users"
         format[1][:table].should == "items"
@@ -116,7 +116,7 @@ describe Flextures do
       before do
         ENV["TABLE"]="users"
         ENV["MINUS"]="created_at"
-        @format = Flextures::ARGS.parse
+        @format = Flextures::ARGS.parse(ENV)
       end
       it "minus colum option is exist" do
         @format.first[:minus].should be_instance_of Array
@@ -134,7 +134,7 @@ describe Flextures do
       before do
         ENV["TABLE"]="users"
         ENV["PLUS"]="hoge"
-        @format = Flextures::ARGS.parse
+        @format = Flextures::ARGS.parse(ENV)
       end
       it "minus colum option is exist" do
         @format.first[:plus].should be_instance_of Array
@@ -153,7 +153,7 @@ describe Flextures do
         before do
           ENV["TABLE"]="users"
           ENV["OPTION"]="silent"
-          @format = Flextures::ARGS.parse
+          @format = Flextures::ARGS.parse(ENV)
         end
         it "minus colum option is exist" do
           @format.first[:silent].should be_true
@@ -168,7 +168,7 @@ describe Flextures do
         before do
           ENV["TABLE"]="users"
           ENV["OPTION"]="unfilter"
-          @format = Flextures::ARGS.parse
+          @format = Flextures::ARGS.parse(ENV)
         end
         it "minus colum option is exist" do
           @format.first[:unfilter].should be_true
@@ -183,7 +183,7 @@ describe Flextures do
         before do
           ENV["TABLE"]="users"
           ENV["OPTION"]="strict"
-          @format = Flextures::ARGS.parse
+          @format = Flextures::ARGS.parse(ENV)
         end
         it "minus colum option is exist" do
           @format.first[:strict].should be_true
