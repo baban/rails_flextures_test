@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 require 'spec_helper'
 
 describe Flextures do
@@ -149,7 +147,7 @@ describe Flextures do
         ENV.delete "PLUS"
       end
     end
-    
+
     context "when OPTIONS options is includeed" do
       context "OPTION include 'silent' value" do
         before do
@@ -265,4 +263,3 @@ describe Flextures do
     end
   end
 end
-
